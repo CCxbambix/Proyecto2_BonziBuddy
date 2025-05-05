@@ -5,5 +5,6 @@ public interface Clonable {
     /**
      * Metodo para clonar el objeto.
      */
-    Object clone();}
+    Object clone();{}
+
 }

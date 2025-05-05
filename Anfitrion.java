@@ -6,6 +6,13 @@ public class Anfitrion{
     public void registrarJugador(Jugador jugador){
     }
 
-    public void notificar(){
+    public void notificarTodos(){
+    }
+
+    public void notificarCastigados(){
+    }
+
+    public void notificarRegulares(){
+        
     }
 }
