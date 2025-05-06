@@ -12,15 +12,16 @@ public class Tarjeta implements Clonable {
      * Obtiene la pregunta contenida en la tarjeta.
      * @return La pregunta de la tarjeta.
      */
-    public String getPregunta() {
-        return null;
+    public String getPregunta(){
+        return this.pregunta;
     }
 
     /**
      * Establece la pregunta de la tarjeta.
      * @param pregunta La nueva pregunta para la tarjeta.
      */
-    public void setPregunta(String pregunta) {
+    public void setPregunta(String pregunta){
+        this.pregunta = pregunta;
     }
 
     /**

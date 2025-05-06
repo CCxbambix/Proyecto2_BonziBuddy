@@ -1,26 +1,41 @@
+import java.util.Iterator;
+
 /**
  * Clase que permite iterar sobre un arreglo de cartas.
  */
 public class ArrayIterator implements Iterator<Tarjeta> {
-    /**Indice actual del arreglo*/
+    /**
+     * Indice actual del arreglo
+     */
     private int index;
-    /** Arreglo de cartas a iterar*/
+    /**
+     * Arreglo de cartas a iterar
+     */
     private Carta[] array;
 
     /**
      * Indica si hay una siguiente carta en el arreglo.
+     *
      * @return true si hay una siguiente carta, false de lo contrario.
      */
+    @Override
     public boolean hasNext() {
-        return false;
+        return index < array.length;
     }
 
     /**
      * Regresa la siguiente carta en el arreglo.
+     *
      * @return La siguiente carta.
      */
+    @Override
     public Tarjeta next() {
-        return null;
+        if (index >= array.length) {
+            return null;
+        }
+        Tarjeta carta = array[index];
+        index++;
+        return carta;
     }
 
     /**

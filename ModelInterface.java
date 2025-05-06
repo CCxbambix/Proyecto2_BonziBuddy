@@ -5,6 +5,8 @@ import java.util.Iterator;
  * Interfaz que define las operaciones que debe realizar el modelo.
  */
 public interface ModelInterface {
+     
+    /** 
      * Registra a un jugador en el modelo.
      *
      * @param j El jugador a registrar.

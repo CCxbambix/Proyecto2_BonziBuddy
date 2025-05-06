@@ -1,36 +1,42 @@
-import java.util.NoSuchElementException;
 import java.util.List;
 
 /**
  * Esta clase implementa la interfaz Iterator para una lista de Jugador.
  */
-public class ListIterator implements Iterator<Tarjeta> {
+public class ListIterator implements Iterator<Jugador> {
     /**
      * Posicion actual en la lista.
      */
     private int position;
     /**
-     * La lista de Jugador a iterar.
+     * La lista de Jugador sobre la que se va a iterar.
      */
     private List<Jugador> list;
 
+    public ListIterator(List<Jugador> list) {
+        this.list = list;
+        this.position = 0;
+    }
+
     /**
-     * Indica si hay un elemento siguiente en la lista.
+     * Verifica si hay un elemento siguiente en la lista.
+     *
      * @return true si hay un elemento siguiente, false de lo contrario.
      */
     @Override
     public boolean hasNext() {
-        return false;
+        return position < list.size();
     }
 
     /**
-     * Retorna la siguiente Carta en la lista.
-     * @return la siguiente carta.
-     * @throws NoSuchElementException si no hay mas elementos en la lista.
+     * Obtiene el siguiente elemento Jugador de la lista.
+     *
+     * @return El siguiente Jugador en la lista, o null si no hay mas elementos.
      */
     @Override
-    public Tarjeta next() {
-        return null;
+    public Jugador next() {
+        if(position >= list.size()) return null;
+        return list.get(position++);
     }
 
     @Override
