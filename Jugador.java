@@ -35,14 +35,19 @@ public class Jugador {
     private int penalizaciones;
 
     /**
+     * Representa los turnos que el usuario esta castigado
+     */
+    private int turnosCastigado;
+
+    /**
      * Representa a el mazo de cartas cuando el jugador es activo
      */
-    List<Carta> mazoActivo;
+    List<Tarjeta> mazoActivo;
 
     /**
      * Representa a el mazo de cartas cuando el jugador esta castigado
      */
-    List<Carta> mazoCastigado;
+    List<Tarjeta> mazoCastigado;
 
     /**Metodos de la clase */
     
@@ -93,6 +98,13 @@ public class Jugador {
     public int getPenalizaciones(){
         return penalizaciones;
     }
+    /**
+     * Regresa los turnos que el jugador lleva castigados
+     * @return int con valor de los turnos que el jugador lleva castigado
+     */
+    public int getTurnosCastigado(){
+        return turnosCastigado;
+    }
 
     /**
      * Cambia las penalizaciones del jugador.
@@ -103,7 +115,7 @@ public class Jugador {
     }
     
     public void incrementarPenalizacion(){
-       
+       setPenalizaciones(getPenalizaciones++);
     }
 
     public void resetPenalizacion(){
@@ -120,7 +132,7 @@ public class Jugador {
      * Metodo que regresa una pregunta.
      * @return Una pregunta.
      */
-    public Pregunta obtenerSiguientePregunta(){
+    public Tarjeta obtenerSiguientePregunta(){
         return null;
     }
 
@@ -143,6 +155,10 @@ public class Jugador {
     public void borrarPregunta(){
     }
 
+    /**
+     * Metodo constructur de la clase
+     * @param String con valor del nombre del jugador
+     */
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.estadoActivo = new Activo(this);
