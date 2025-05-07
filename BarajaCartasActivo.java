@@ -1,9 +1,11 @@
 
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class BarajaCartasActivo {
+public class BarajaCartasActivo implements Iterable<Tarjeta>{
+
     private List<Tarjeta> tarjetas;
 
     public BarajaCartasActivo() {
@@ -31,5 +33,10 @@ public class BarajaCartasActivo {
             return tarjetas.get(index);
             }
         return null;
+    }
+
+    @Override
+    public Iterator<Tarjeta> iterator() {
+        return tarjetas.iterator();
     }
 }

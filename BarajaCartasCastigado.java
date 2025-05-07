@@ -1,12 +1,14 @@
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Clase que representa una baraja de tarjetas de castigo.
  */
+
 import java.util.Objects;
 
-public class BarajaCartasCastigado {
+public class BarajaCartasCastigado implements Iterable<Tarjeta>{
     /**
      * Lista de tarjetas en la baraja de castigo.
      */
@@ -59,5 +61,10 @@ public class BarajaCartasCastigado {
                 return;
             }
         }
+    }
+
+    @Override
+    public Iterator<Tarjeta> iterator() {
+        return tarjetas.iterator();
     }
 }

@@ -1,8 +1,10 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ListaJugadores {
+public class ListaJugadores implements Iterable<Jugador> {
     private Queue<Jugador> colaJugadores;
+
 
     public ListaJugadores() {
         colaJugadores = new LinkedList<>();
@@ -28,5 +30,10 @@ public class ListaJugadores {
     
     public boolean estaVacia(){
         return colaJugadores.isEmpty();
+    }
+
+    @Override
+    public Iterator<Jugador> iterator() {
+        return colaJugadores.iterator();
     }
 }
