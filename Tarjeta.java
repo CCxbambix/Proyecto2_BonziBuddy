@@ -36,7 +36,7 @@ public class Tarjeta implements Clonable {
      * @return Una copia de esta tarjeta.
      */
     @Override
-    public Object clone() {
-        return null;
+    public Tarjeta clone() {
+        return new Tarjeta();
     }
 }
