@@ -153,6 +153,7 @@ public class Jugador {
      * Metodo que no recibe nada y no regresa nada
      */
     public void borrarPregunta(){
+        estadoActual.borrarPregunta();
     }
 
     /**
