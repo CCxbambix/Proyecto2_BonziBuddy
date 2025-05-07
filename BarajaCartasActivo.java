@@ -1,6 +1,6 @@
-import java.util.List;
-import java.util.Iterator;
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class BarajaCartasActivo {
@@ -11,16 +11,25 @@ public class BarajaCartasActivo {
     }
 
     /**
-     * Crea y regresa un nuevo iterador para la lista de tarjetas.
-     * @return Un nuevo iterador para las tarjetas.
+     * Elimina una tarjeta de la baraja.
+     *
+     * @param tarjeta La tarjeta a eliminar.
      */
-    public Iterator<Tarjeta> crearIterador() {
-        return new ListIterator(this.tarjetas);
+    public void eliminaTarjeta(Tarjeta tarjeta) {
+        tarjetas.remove(tarjeta);
     }
 
-    public void eliminaTarjeta(Tarjeta tarjeta) {
-        if (tarjetas.contains(tarjeta)) {
-            tarjetas.remove(tarjeta);
-        }
+    public void agregarTarjeta(Tarjeta tarjeta) {
+        tarjetas.add(tarjeta);
+    }
+
+    public int tamanio() {
+        return tarjetas.size();
+    }
+    public Tarjeta obtenerTarjeta(int index) {
+        if (index >= 0 && index < tarjetas.size()) {
+            return tarjetas.get(index);
+            }
+        return null;
     }
 }

@@ -1,35 +1,63 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Clase que representa una baraja de tarjetas de castigo.
+ */
+import java.util.Objects;
 
 public class BarajaCartasCastigado {
     /**
-     * Array de tarjetas en la baraja de castigo.
+     * Lista de tarjetas en la baraja de castigo.
      */
-    private Tarjeta[] tarjetas;
+    private List<Tarjeta> tarjetas;
 
     /**
-     * Crea y devuelve un nuevo objeto ArrayIterator<Tarjeta>.
-     * @return un nuevo objeto ArrayIterator<Tarjeta>.
+     * Constructor para la baraja de castigo.
      */
-    public Iterator<Tarjeta> crearIterador() {
-        return new ArrayIterator(tarjetas);
+    public BarajaCartasCastigado() {
+        tarjetas = new ArrayList<>();
     }
-/**
- * Elimina una tarjeta específica de la baraja de castigo.
- *
- * @param tarjeta La tarjeta a eliminar.
- */
-public void eliminaTarjeta(Tarjeta tarjeta) {
-    if (tarjetas == null) {
-        return; // No hay tarjetas para eliminar
+
+    /**
+     * Saca una tarjeta de la baraja de castigo.
+     *
+     * @return La tarjeta sacada de la baraja, o null si la baraja esta vacia.
+     */
+    public Tarjeta sacaTarjeta() {
+        if (tarjetas.isEmpty()) {
+            return null;
+        }
+        // Saca la ultima tarjeta de la lista
+        return tarjetas.remove(tarjetas.size() - 1);
     }
-    for (int i = 0; i < tarjetas.length; i++) {
-        if (tarjetas[i] != null && tarjetas[i].equals(tarjeta)) {
-            for (int j = i; j < tarjetas.length - 1; j++) {
-                tarjetas[j] = tarjetas[j + 1];
+
+    /**
+     * Aniade una nueva tarjeta a la baraja de castigo con la pregunta especificada.
+     *
+     * @param pregunta La pregunta para la nueva tarjeta.
+     */
+    public void aniadeTarjeta(String pregunta) {
+        Tarjeta nuevaTarjeta = new Tarjeta();
+        nuevaTarjeta.setPregunta(pregunta);
+        tarjetas.add(nuevaTarjeta);
+    }
+
+    /**
+     * Elimina una tarjeta especifica de la baraja de castigo.
+     *
+     * @param tarjeta La tarjeta a eliminar.
+     */
+    public void eliminaTarjeta(Tarjeta tarjeta) {
+        if (tarjetas.isEmpty()) {
+            return;
+        }
+
+        for (int i = 0; i < tarjetas.size(); i++) {
+            if (Objects.equals(tarjetas.get(i), tarjeta)) {
+                tarjetas.remove(i);
+                return;
             }
-            tarjetas[tarjetas.length - 1] = null; 
-            break;
         }
     }
-}
 }
