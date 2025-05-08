@@ -20,9 +20,9 @@ public class Jugador {
     private EstadoJugador estadoActual;
 
     /**
-     * representa el estado activo del usuario
+     * representa el estado regular del usuario
      */
-    private EstadoJugador estadoActivo;
+    private EstadoJugador estadoRegular;
 
     /**
      * Representa a el estado castigado del usuario
@@ -42,15 +42,29 @@ public class Jugador {
     /**
      * Representa a el mazo de cartas cuando el jugador es activo
      */
-    List<Tarjeta> mazoActivo;
+    List<Tarjeta> barajaRegular;
 
     /**
      * Representa a el mazo de cartas cuando el jugador esta castigado
      */
-    List<Tarjeta> mazoCastigado;
+    List<Tarjeta> barajaCastigado;
 
     /**Metodos de la clase */
     
+    /**
+     * Metodo constructor de la clase
+     * @param String con valor del nombre del jugador
+     */
+    public Jugador(String nombre) {
+        this.nombre = nombre;
+        this.estadoRegular = new Regular(this);
+        this.estadoCastigado = new Castigado(this);
+        this.estadoActual = this.estadoRegular;
+        this.penalizaciones = 0;
+        this.barajaRegular = new ArrayList<>();
+        this.barajaCastigado = new ArrayList<>();
+    }
+
     /**
      * Regresa el nombre del jugador.
      * @return El nombre del jugador.
@@ -72,7 +86,7 @@ public class Jugador {
      * @return El estado activo del jugador.
      */
     public EstadoJugador getEstadoActivo(){
-        return estadoActivo;
+        return estadoRegular;
     }
 
     /**
@@ -114,13 +128,13 @@ public class Jugador {
         this.penalizaciones= penalizaciones;
     }
     
-    public void incrementarPenalizacion(){
-       setPenalizaciones(getPenalizaciones++);
-    }
+   // public void incrementarPenalizacion(){
+   //    setPenalizaciones(getPenalizaciones++);
+   // }
 
-    public void resetPenalizacion(){
-        
-    }
+    //public void resetPenalizacion(){
+    //    
+    //}
 
     /**
      * Metodo que no recibe nada y no regresa nada.
@@ -133,42 +147,47 @@ public class Jugador {
      * @return Una pregunta.
      */
     public Tarjeta obtenerSiguientePregunta(){
-        return null;
+        return estadoActual.obtenerSiguientePregunta();
     }
 
-    /**
-     * Metodo que recibe una respuesta y no regresa nada
-     * @param respuesta que da el usuario.
-     */
-    public void responderPregunta(Respuesta r){
-    }
+    ///**
+    // * Metodo que recibe una respuesta y no regresa nada
+    // * @param respuesta que da el usuario.
+    // */
+    //public void responderPregunta(){
+    //    estadoActivo.responderPregunta();
+    //}
+//
+    ///**
+    // * Metodo que no recibe nada y no regresa nada
+    // */
+    //public void rechazarPregunta(){
+    //    estadoActual.rechazarPregunta(); 
+    //}
 
     /**
      * Metodo que no recibe nada y no regresa nada
      */
-    public void rechazarPregunta(){
+    public void borrarPregunta(Tarjeta tarjeta){
+        estadoRegular.borrarPregunta(tarjeta);
     }
 
     /**
-     * Metodo que no recibe nada y no regresa nada
+     * Metodo que regresa la baraja regular
+     * @return la baraja regular
      */
-    public void borrarPregunta(){
-        estadoActual.borrarPregunta();
+    public List<Tarjeta> getBarajaRegular(){
+        return barajaRegular;
     }
 
     /**
-     * Metodo constructur de la clase
-     * @param String con valor del nombre del jugador
+     * Metodo que regresa la baraja Castigado
+     * @return barajaCastigado
      */
-    public Jugador(String nombre) {
-        this.nombre = nombre;
-        this.estadoActivo = new Activo(this);
-        this.estadoCastigado = new Castigado(this);
-        this.estadoActual = this.estadoActivo;
-        this.penalizaciones = 0;
-        this.mazoActivo = new ArrayList<>();
-        this.mazoCastigado = new ArrayList<>();
+    public List<Tarjeta> getBarajaCastigado(){
+        return barajaCastigado;
     }
+
     
     
 

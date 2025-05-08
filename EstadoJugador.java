@@ -11,7 +11,7 @@ public interface EstadoJugador{
     /**
      * Metodo que borrar la pregunta mostrada del mazo
      */
-    public void borrarPregunta();
+    public void borrarPregunta(Tarjeta tarjeta);
 
     
 
