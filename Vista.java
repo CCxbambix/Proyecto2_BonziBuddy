@@ -35,16 +35,14 @@ public class Vista implements VistaInterface, Observador {
      * Muestra el mensaje de bienvenida y las reglas del juego.
      */
     private void mostrarBienvenida() {
-        System.out.println("BIENVENIDO A FUNADO
-");
+        System.out.println("BIENVENIDO A FUNADO");
         System.out.println("Objetivo: acumular la mayor cantidad de puntos posibles.");
         System.out.println("Reglas basicas:");
         System.out.println("- En cada turno, un jugador recibe una pregunta o un reto.");
         System.out.println("- Responder/completar vale 1 punto; si no, eres castigado.");
         System.out.println("- Un castigado debe responder Y completar para ganar 1 punto.");
         System.out.println("- Tras 2 turnos, un castigado vuelve a REGULAR.");
-        System.out.println("- Ocasionalmente activamos eventos que afectan a jugadores.
-");
+        System.out.println("- Ocasionalmente activamos eventos que afectan a jugadores.");
     }
 
     /**
@@ -67,8 +65,7 @@ public class Vista implements VistaInterface, Observador {
         while (true) {
             Jugador actual = model.obtenerSiguienteJugador();
             if (actual == null) break;
-            System.out.printf("
-Turno de %s (%s). Elige [q]uestion, [r]eto o [p]asar:%n",
+            System.out.printf("Turno de %s (%s). Elige [q]uestion, [r]eto o [p]asar:%n",
                               actual.getNombre(), actual.getEstado());
             String opt = sc.nextLine().trim().toLowerCase();
             switch (opt) {
@@ -89,8 +86,7 @@ Turno de %s (%s). Elige [q]uestion, [r]eto o [p]asar:%n",
                     System.out.println("Opcion no valida.");
             }
         }
-        System.out.println("
-¡Juego terminado!");
+        System.out.println("¡Juego terminado!");
     }
 
     /**
@@ -99,8 +95,7 @@ Turno de %s (%s). Elige [q]uestion, [r]eto o [p]asar:%n",
      */
     @Override
     public void actualizar() {
-        System.out.println("
--- Modelo actualizado --");
+        System.out.println("-- Modelo actualizado --");
         System.out.println("Jugador actual: " + model.obtenerSiguienteJugador().getNombre());
     }
 
@@ -110,8 +105,7 @@ Turno de %s (%s). Elige [q]uestion, [r]eto o [p]asar:%n",
      */
     @Override
     public void mostrarPregunta(Tarjeta tarjeta) {
-        System.out.println("
---- TARJETA ---");
+        System.out.println("--- TARJETA ---");
         System.out.println(tarjeta.getPregunta());
         System.out.print("> Respuesta: ");
     }
