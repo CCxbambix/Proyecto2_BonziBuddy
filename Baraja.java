@@ -5,15 +5,17 @@ import java.util.ArrayList;
  */
 public class Baraja {
     Tarjeta[] tarjetas;
+    int indexActual;
 
     public void setBaraja(ArrayList<String> preguntas) {
         startBaraja(preguntas);
         revolverBaraja();
+        indexActual = 0;
     }
 
     public void startBaraja(ArrayList<String> preguntas) {
         if (preguntas == null || preguntas.isEmpty()) {
-            throw new IllegalArgumentException("La lista de preguntas no puede estar vacía.");
+            throw new IllegalArgumentException("La lista no puede estar vacía.");
         }
         
         // Inicializa la baraja con el tamaño de las preguntas
@@ -38,5 +40,29 @@ public class Baraja {
             tarjetas[i] = tarjetas[randomIndex];
             tarjetas[randomIndex] = temp;
         }
+    }
+
+    public Tarjeta getTarjeta(int index) {
+        if (index < 0 || index >= tarjetas.length) {
+            throw new IndexOutOfBoundsException("Índice fuera de rango.");
+        }
+        return tarjetas[index];
+    }
+
+    public Tarjeta getSiguienteTarjeta() {
+        if (indexActual >= tarjetas.length) {
+            return null; // No hay más tarjetas
+        }
+        Tarjeta tarjeta = tarjetas[indexActual];
+        indexActual++;
+        return tarjeta;
+    }
+
+    public int getSize() {
+        return tarjetas.length;
+    }
+
+    public int getIndex() {
+        return indexActual;
     }
 }

@@ -5,15 +5,15 @@ import java.util.ArrayList;
 
 public class LectorPreguntas {
 
-    public static ArrayList<String> preguntasRegular() {
-        return preguntas("preguntasRegular.txt");
+    public static ArrayList<String> getPreguntas() {
+        return preguntas("preguntas.txt");
     }
 
-    public static ArrayList<String> preguntasCastigado() {
-        return preguntas("preguntasCastigado.txt");
+    public static ArrayList<String> getRetos() {
+        return preguntas("retos.txt");
     }
 
-    public static ArrayList<String> eventos() {
+    public static ArrayList<String> getEventos() {
         return preguntas("eventos.txt");
     }
 

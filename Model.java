@@ -13,23 +13,9 @@ public class Model {
     /**
      * Baraja regular de cartas activas.
      */
-    private BarajaRegular barajaActiva;
-
-    /**
-     * Baraja de castigo.
-     */
-    private BarajaCastigo barajaCastigado;
-
-    /**
-     * Iterador para recorrer las cartas.
-     */
-    private Iterator<Carta> iterador;
-
-    /**
-     * Lista de observadores que serán notificados de cambios en el modelo.
-     */
-    private List<Observador> observers;
-
+    private Baraja retos;
+    private Baraja eventos;
+    private Baraja preguntas;
     /**
      * Registra a un jugador en el juego.
      * @param j El jugador a registrar.
@@ -41,20 +27,26 @@ public class Model {
      * Inicia la partida.
      */
     public void iniciarPartida() {
+        retos = new Baraja();
+        retos.setBaraja(LectorPreguntas.getRetos());
+        eventos = new Baraja();
+        eventos.setBaraja(LectorPreguntas.getEventos());
+        preguntas = new Baraja();
+        preguntas.setBaraja(LectorPreguntas.getPreguntas());
     }
 
-    /**
-     * Genera la baraja de cartas con una dificultad especificada.
-     * @param dificultad La dificultad para generar la baraja.
-     * @return Un iterador para recorrer la baraja de cartas.
-     */
-    public Iterator<Carta> generarBaraja(int dificultad) {
-        return null;
+    public Tarjeta getTarjetaRetos() {
+        return retos.getSiguienteTarjeta();
     }
 
-    /**
-     * Notifica a los observadores sobre los cambios.
-     */
+    public Tarjeta getTarjetaEventos() {
+        return eventos.getSiguienteTarjeta();
+    }
+
+    public Tarjeta getTarjetaPreguntas() {
+        return preguntas.getSiguienteTarjeta();
+    }
+
     public void notificar() {
     }
 }

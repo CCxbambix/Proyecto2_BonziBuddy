@@ -5,26 +5,17 @@ public class Controller {
     /**
      * Interfaz del modelo que el controlador usa.
      */
-    private ModelInterface model;
+    final private ModelInterface model;
+    final private Vista vista;
 
     /**
-     * Procesa la respuesta de un jugador.
-     * @param j El jugador que respondio.
-     * @param r La respuesta dada.
+     * Constructor del controlador.
+     * @param model El modelo que el controlador usara.
+     * @param vista La vista que el controlador usara.
      */
-    public void procesarRespuesta(Jugador j, Respuesta r) {
-    }
-
-    /**
-     * Pasa el turno al siguiente jugador.
-     */
-    public void pasarTurno() {
-    }
-
-    /**
-     * Refuerza el estado de un jugador.
-     * @param j El jugador a reforzar.
-     */
-    public void reforzarEstado(Jugador j) {
+    public Controller(ModelInterface model) {
+        this.model = model;
+        this.vista = new Vista(this);
+        model.iniciarPartida();
     }
 }
