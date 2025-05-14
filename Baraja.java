@@ -1,67 +1,72 @@
+import java.util.List;
+import java.util.Random;
 
-import java.util.ArrayList;
 /**
- * Clase que representa una baraja regular de tarjetas.
+ * Representa una baraja de tarjetas con preguntas para el juego.
  */
 public class Baraja {
-    Tarjeta[] tarjetas;
-    int indexActual;
+    private final Tarjeta[] tarjetas;
+    private int indexActual = 0;
 
-    public void setBaraja(ArrayList<String> preguntas) {
-        startBaraja(preguntas);
-        revolverBaraja();
-        indexActual = 0;
-    }
-
-    public void startBaraja(ArrayList<String> preguntas) {
+    /**
+     * Constructor de la Baraja.
+     * Inicializa la baraja con una lista de preguntas y las clona en objetos Tarjeta.
+     * Luego, revuelve la baraja.
+     * @param preguntas Una lista de cadenas que representan las preguntas para las tarjetas.
+     * @throws IllegalArgumentException Si la lista de preguntas es nula o esta vacia.
+     */
+    public Baraja(List<String> preguntas) {
         if (preguntas == null || preguntas.isEmpty()) {
-            throw new IllegalArgumentException("La lista no puede estar vacía.");
+            throw new IllegalArgumentException("La lista no puede estar vacia");
         }
-        
-        // Inicializa la baraja con el tamaño de las preguntas
-        this.tarjetas = new Tarjeta[preguntas.size()];
-
-        tarjetas[0] = new Tarjeta();
-        tarjetas[0].setPregunta(preguntas.get(0));
-
-        // Crea una tarjeta para cada pregunta y la agrega a la baraja
-        for (int i = 1; i < preguntas.size(); i++) {
-            Tarjeta tarjeta = tarjetas[0].clone();
-            tarjeta.setPregunta(preguntas.get(i));
-            this.tarjetas[i] = tarjeta;
+        int n = preguntas.size();
+        this.tarjetas = new Tarjeta[n];
+        // inicializa y clona correctamente usando el constructor de copia
+        for (int i = 0; i < n; i++) {
+            Tarjeta base = new Tarjeta();
+            base.setPregunta(preguntas.get(i));
+            this.tarjetas[i] = base.clone();
         }
+        revolverBaraja();
     }
 
-    public void revolverBaraja() {
-        // Baraja las tarjetas de la baraja
+    /**
+     * Revuelve el orden de las tarjetas en la baraja de forma aleatoria.
+     */
+    private void revolverBaraja() {
+        Random rnd = new Random();
         for (int i = 0; i < tarjetas.length; i++) {
-            int randomIndex = (int) (Math.random() * tarjetas.length);
-            Tarjeta temp = tarjetas[i];
-            tarjetas[i] = tarjetas[randomIndex];
-            tarjetas[randomIndex] = temp;
+            int j = rnd.nextInt(tarjetas.length);
+            Tarjeta tmp = tarjetas[i];
+            tarjetas[i] = tarjetas[j];
+            tarjetas[j] = tmp;
         }
     }
 
-    public Tarjeta getTarjeta(int index) {
-        if (index < 0 || index >= tarjetas.length) {
-            throw new IndexOutOfBoundsException("Índice fuera de rango.");
-        }
-        return tarjetas[index];
-    }
-
+    /**
+     * Obtiene la siguiente tarjeta de la baraja.
+     * Avanza el indice interno a la siguiente tarjeta.
+     * @return La siguiente tarjeta en la baraja, o null si no hay mas tarjetas.
+     */
     public Tarjeta getSiguienteTarjeta() {
         if (indexActual >= tarjetas.length) {
-            return null; // No hay más tarjetas
+            return null;
         }
-        Tarjeta tarjeta = tarjetas[indexActual];
-        indexActual++;
-        return tarjeta;
+        return tarjetas[indexActual++];
     }
 
+    /**
+     * Obtiene el numero total de tarjetas en la baraja.
+     * @return El tamano de la baraja.
+     */
     public int getSize() {
         return tarjetas.length;
     }
 
+    /**
+     * Obtiene el indice de la tarjeta actual en la baraja.
+     * @return El indice actual de la tarjeta.
+     */
     public int getIndex() {
         return indexActual;
     }
