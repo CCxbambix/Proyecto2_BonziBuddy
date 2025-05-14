@@ -18,4 +18,10 @@ public class Controller {
         this.vista = new Vista(this);
         model.iniciarPartida();
     }
+
+    public void registrarJugador(String nombre) {
+        Jugador jugador = new Jugador(nombre, model);
+        model.registrarJugador(jugador);
+        vista.mostrarMensaje("Jugador registrado: " + nombre);
+    }
 }

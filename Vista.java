@@ -37,8 +37,30 @@ public class Vista{
         try {
             Scanner sc = new Scanner(System.in);
             System.out.println("Agrega el nombre del jugador 1");
+            String nombre = sc.nextLine();
+            controller.registrarJugador(nombre);
+
+            System.out.println("Agrega el nombre del jugador 2");
+            nombre = sc.nextLine();
+            controller.registrarJugador(nombre);
+
+            int i = 3;
+            while (true) {
+                System.out.println(String.format("Agrega el nombre del jugador %d o escribe 'fin' para terminar", i));
+                nombre = sc.nextLine();
+                if (nombre.equalsIgnoreCase("fin")) {
+                    break;
+                }
+                controller.registrarJugador(nombre);
+            }
+
+            sc.close();
 
         } catch (Exception e) {
         }
+    }
+
+    public void mostrarMensaje(String mensaje){
+        System.out.println(mensaje);
     }
 }

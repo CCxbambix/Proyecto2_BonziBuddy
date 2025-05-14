@@ -34,13 +34,13 @@ public class Jugador {
 
     private Estado estado;
     
-    private Model model;
+    private ModelInterface model;
 
     /**
      * Metodo constructor de la clase
      * @param String con valor del nombre del jugador
      */
-    public Jugador(String nombre, Model model) {
+    public Jugador(String nombre, ModelInterface model) {
         this.nombre = nombre;
         this.estadoRegular = new Regular(this);
         this.estadoCastigado = new Castigado(this);
@@ -65,7 +65,7 @@ public class Jugador {
         return estado;
     }
 
-    public Model getModel(){
+    public ModelInterface getModel(){
         return model;
     }
 

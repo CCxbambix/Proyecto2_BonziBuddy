@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -21,6 +22,10 @@ public class Model {
      * @param j El jugador a registrar.
      */
     public void registrarJugador(Jugador j) {
+        if (jugadores == null) {
+            jugadores = new LinkedList<>();
+        }
+        jugadores.add(j);
     }
 
     /**
@@ -45,6 +50,18 @@ public class Model {
 
     public Tarjeta getTarjetaPreguntas() {
         return preguntas.getSiguienteTarjeta();
+    }
+
+    public int getIndexRetos() {
+        return retos.getIndex();
+    }
+
+    public int getIndexEventos() {
+        return eventos.getIndex();
+    }
+    
+    public int getIndexPreguntas() {
+        return preguntas.getIndex();
     }
 
     public void notificar() {
