@@ -3,6 +3,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class ListaJugadores implements Iterable<Jugador> {
+    
+    //Atributos de la clase 
+
+    /**
+     * Representa a la cola de Jugadores para el juego
+     */
     private Queue<Jugador> colaJugadores;
 
 

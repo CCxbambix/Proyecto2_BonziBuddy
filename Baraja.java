@@ -4,8 +4,8 @@ import java.util.ArrayList;
  * Clase que representa una baraja regular de tarjetas.
  */
 public class Baraja {
-    Tarjeta[] tarjetas;
-    int indexActual;
+    private Tarjeta[] tarjetas;
+    private int indexActual;
 
     public void setBaraja(ArrayList<String> preguntas) {
         startBaraja(preguntas);

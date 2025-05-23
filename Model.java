@@ -17,6 +17,7 @@ public class Model {
     private Baraja retos;
     private Baraja eventos;
     private Baraja preguntas;
+    
     /**
      * Registra a un jugador en el juego.
      * @param j El jugador a registrar.
