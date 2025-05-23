@@ -32,6 +32,11 @@ public class Jugador {
      */
     private int turnosCastigado;
 
+    /**
+     * Representa los puntos del jugador 
+     */
+    private int puntos;
+
     private Estado estado;
     
     private ModelInterface model;
@@ -108,4 +113,30 @@ public class Jugador {
     public void turnoSiguiente(){
         estadoActual.turnoSiguiente();
     }
+
+    /**
+     * Devuelve los puntos que tiene el jugador 
+     * @return int con valor de los puntos que tiene el jugador
+     */
+    public int getPuntos(){
+        return puntos;
+    }
+
+    /**
+     * Metodo que cambia el valor de los puntos del jugador 
+     * @param int con valor a los nuevos puntos del jugador
+     */
+    public void setPuntos(int puntos){
+        this.puntos= puntos;
+    }
+
+    /**
+     * Metodo que incrementa 1 los puntos actuales del jugador 
+     */
+    public void incrementarPuntos(){
+        int puntosJugador = getPuntos();
+        puntosJugador++;
+        setPuntos(puntosJugador);
+    }
+
 }
