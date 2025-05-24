@@ -1,7 +1,13 @@
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
+/**
+ * Gestiona una lista de jugadores en una cola circular para controlar los turnos.
+ * Implementa la interfaz Iterable para permitir la iteracion sobre los jugadores.
+ */
 public class ListaJugadores implements Iterable<Jugador> {
     
     //Atributos de la clase 
@@ -17,29 +23,54 @@ public class ListaJugadores implements Iterable<Jugador> {
     }
 
     /**
-     * Agrega un jugador a la cola de jugadores.
+     * Agrega un jugador al final de la cola de jugadores.
      * @param jugador El jugador a agregar.
+     * @throws IllegalArgumentException si el jugador proporcionado es nulo.
      */
     public void agregarJugador(Jugador jugador) {
+        if (jugador == null) {
+            throw new IllegalArgumentException("Jugador no puede ser nulo");
+        }
         colaJugadores.add(jugador);
     }
 
     /**
-     * Obtiene el siguiente jugador de la cola, lo vuelve a encolar al final y lo regresa.
-     * @return El siguiente jugador en la cola.
+     * Obtiene el siguiente jugador en el turno. Mueve al jugador actual al final de la cola.
+     * @return El jugador cuyo turno sigue.
+     * @throws NoSuchElementException si la cola de jugadores esta vacia.
      */
     public Jugador obtenerSiguienteJugador() {
-        Jugador siguienteJugador = colaJugadores.poll();
-        colaJugadores.add(siguienteJugador);
-        return siguienteJugador;
+        if (colaJugadores.isEmpty()) {
+            throw new NoSuchElementException("No hay jugadores en la cola");
+        }
+        Jugador siguiente = colaJugadores.poll();
+        colaJugadores.add(siguiente);
+        return siguiente;
     }
-    
-    public boolean estaVacia(){
+
+    /**
+     * Verifica si la lista de jugadores esta vacia.
+     * @return true si no hay jugadores, false en caso contrario.
+     */
+    public boolean estaVacia() {
         return colaJugadores.isEmpty();
     }
 
+    /**
+     * Obtiene el numero de jugadores en la lista.
+     * @return El tamano de la lista de jugadores.
+     */
+    public int size() {
+        return colaJugadores.size();
+    }
+
+    /**
+     * Devuelve un iterador sobre los elementos de esta lista en la secuencia correcta.
+     * La coleccion sobre la que itera es no modificable para proteger la estructura interna.
+     * @return Un iterador sobre los jugadores en la lista.
+     */
     @Override
     public Iterator<Jugador> iterator() {
-        return colaJugadores.iterator();
+        return Collections.unmodifiableCollection(colaJugadores).iterator();
     }
 }

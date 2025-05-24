@@ -1,54 +1,46 @@
 /**
- * Interfaz que representa a el Sujeto que es observado para Observer
+ * Interfaz que define el rol de Sujeto en el patron Observer.
+ * Un Sujeto es un objeto que mantiene una lista de observadores y les notifica automaticamente
+ * de cualquier cambio en su estado, generalmente llamando a uno de sus metodos.
+ * En este contexto, el Modelo actua como Sujeto, y los Jugadores actuan como Observadores.
  */
-public interface Sujeto{    
-
+public interface Sujeto {
     /**
-     * Metodo que añade a un Jugador a la lista de Todos los jugadores
-     * para ser notificados
-     * @param Jugador con el jugador a registrar
+     * Registra un observador (Jugador) para recibir notificaciones de cambios en el estado del sujeto.
+     * @param jugador El jugador que desea registrarse como observador.
      */
     public void registrarJugador(Jugador jugador);
-
     /**
-     * Metodo que añade a un jugador a la lista de jugadores regulares 
-     * para ser notificados
-     * @param Jugador con valor a el jugador a registrar
+     * Registra un observador (Jugador) especificamente en la lista de regulares para notificaciones dirigidas.
+     * @param jugador El jugador que desea registrarse en la lista de regulares.
      */
     public void registrarRegular(Jugador jugador);
-
     /**
-     * Metodo que añade a un jugador a la lista de jugadores castigados 
-     * para ser notificados
-     * @param Jugador con valor a el jugador a registrar
+     * Registra un observador (Jugador) especificamente en la lista de castigados para notificaciones dirigidas.
+     * @param jugador El jugador que desea registrarse en la lista de castigados.
      */
     public void registrarCastigado(Jugador jugador);
-
     /**
-     * Metodo que elimina a un jugador de la lista de Regulares 
-     * @param Jugador con el jugador a eliminar
+     * Elimina un observador (Jugador) de la lista de regulares para que deje de recibir notificaciones dirigidas a ese grupo.
+     * @param jugador El jugador que desea ser eliminado de la lista de regulares.
      */
     public void eliminarRegular(Jugador jugador);
-
     /**
-     * Metodo que elimina a un jugador de la lista de Castigados 
-     * @param Jugador con el jugador a eliminar
+     * Elimina un observador (Jugador) de la lista de castigados para que deje de recibir notificaciones dirigidas a ese grupo.
+     * @param jugador El jugador que desea ser eliminado de la lista de castigados.
      */
     public void eliminarCastigado(Jugador jugador);
-
     /**
-     * Metodo que Notifica a todos los jugadores del juego
+     * Notifica a todos los observadores registrados (Jugadores) sobre un cambio en el estado del sujeto.
+     * Cada observador respondera a la notificacion llamando a su metodo de actualizacion.
      */
     public void notificarTodos();
-
     /**
-     * Metodo que notifica solo a los Jugadores Regulares
+     * Notifica solo a los observadores (Jugadores) registrados como regulares sobre un cambio.
      */
     public void notificarRegulares();
-
     /**
-     * Metodo que notifica solo a los jugadores Castigados
+     * Notifica solo a los observadores (Jugadores) registrados como castigados sobre un cambio.
      */
     public void notificarCastigados();
-
 }

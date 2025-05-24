@@ -1,35 +1,13 @@
-
 /**
- * Clase que representa a un jugador en el juego.
+ * Representa a un jugador en el juego.
+ * Implementa la interfaz Observador para ser notificado por el modelo.
+ * Maneja su estado actual (regular o castigado) y su interaccion con el modelo.
  */
-
-public class Jugador {
-
-    /**Atributos de la clase */
-
-    /**
-     * Representa a el nombre del jugador
-     */
-    private String nombre;
-
-    /**
-     * Representa a el estado actual del usuario
-     */
+public class Jugador implements Observador {
+    private final String nombre;
+    private final EstadoJugador estadoRegular;
+    private final EstadoJugador estadoCastigado;
     private EstadoJugador estadoActual;
-
-    /**
-     * representa el estado regular del usuario
-     */
-    private EstadoJugador estadoRegular;
-
-    /**
-     * Representa a el estado castigado del usuario
-     */
-    private EstadoJugador estadoCastigado;
-
-    /**
-     * Representa los turnos que el usuario esta castigado
-     */
     private int turnosCastigado;
 
     /**
@@ -42,76 +20,111 @@ public class Jugador {
     private ModelInterface model;
 
     /**
-     * Metodo constructor de la clase
-     * @param String con valor del nombre del jugador
+     * Constructor de la clase Jugador.
+     * Inicializa al jugador con su nombre, el modelo asociado y sus estados iniciales.
+     * Se registra automaticamente en el modelo al ser creado.
+     * @param nombre El nombre del jugador.
+     * @param model La instancia del modelo con la que interactuara el jugador.
      */
     public Jugador(String nombre, ModelInterface model) {
         this.nombre = nombre;
-        this.estadoRegular = new Regular(this);
-        this.estadoCastigado = new Castigado(this);
-        this.estadoActual = this.estadoRegular;
-        estado = Estado.REGULAR;
         this.model = model;
+        this.estadoRegular = new Regular();
+        this.estadoCastigado = new Castigado();
+        this.estadoActual = estadoRegular;
+        this.turnosCastigado = 0;
+        model.registrarJugador(this);
     }
 
     /**
-     * Regresa el nombre del jugador.
+     * Obtiene el nombre del jugador.
      * @return El nombre del jugador.
      */
-    public String getNombre(){
+    public String getNombre() {
         return nombre;
     }
 
     /**
-     * Regresa el estado actual del jugador.
+     * Obtiene el estado actual del jugador (REGULAR o CASTIGADO).
      * @return El estado actual del jugador.
      */
-    public Estado getEstado(){
-        return estado;
-    }
-
-    public ModelInterface getModel(){
-        return model;
+    public Estado getEstado() {
+        return estadoActual.getEstado();
     }
 
     /**
-     * Regresa el estado activo del jugador.
-     * @return El estado activo del jugador.
+     * Obtiene el numero de turnos que le quedan al jugador en estado castigado.
+     * @return El numero de turnos castigado.
      */
-    public EstadoJugador getEstadoActivo(){
+    public int getTurnosCastigado() {
+        return turnosCastigado;
+    }
+
+    /**
+     * Establece el estado actual del jugador.
+     * @param nuevo El nuevo estado del jugador.
+     */
+    public void setEstadoActual(EstadoJugador nuevo) {
+        this.estadoActual = nuevo;
+    }
+
+    /**
+     * Obtiene la instancia del estado Regular.
+     * @return La instancia de EstadoJugador para el estado Regular.
+     */
+    public EstadoJugador getEstadoActivo() {
         return estadoRegular;
     }
 
     /**
-     * Regresa el estado castigado del jugador.
-     * @return El estado castigado del jugador.
+     * Obtiene la instancia del estado Castigado.
+     * @return La instancia de EstadoJugador para el estado Castigado.
      */
-    public EstadoJugador getEstadoCastigado(){
+    public EstadoJugador getEstadoCastigado() {
         return estadoCastigado;
     }
 
     /**
-     * Cambia el estado actual del jugador.
-     * @param estadoJugador El nuevo estado del jugador.
+     * Establece el numero de turnos que el jugador estara castigado.
+     * @param cantidad El numero de turnos de castigo.
      */
-    public void setEstadoActual(EstadoJugador estadoJugador){
-        this.estadoActual = estadoJugador;
-        this.estado = estadoJugador.getEstado();
+    public void incrementarTurnosCastigado(int cantidad) {
+        this.turnosCastigado = cantidad;
     }
 
     /**
-     * Regresa los turnos que el jugador lleva castigados
-     * @return int con valor de los turnos que el jugador lleva castigado
+     * Decrementa en uno el numero de turnos que le quedan al jugador en estado castigado.
+     * Asegura que el contador no baje de cero.
      */
-    public int getTurnosCastigado(){
-        return turnosCastigado;
+    public void decrementarTurnosCastigado() {
+        if (turnosCastigado > 0) {
+            turnosCastigado--;
+        }
     }
 
-    public void actualizar(){
+    /**
+     * Obtiene la instancia del modelo asociada a este jugador.
+     * @return La instancia del modelo.
+     */
+    public ModelInterface getModel() {
+        return model;
     }
 
-    public void turnoSiguiente(){
-        estadoActual.turnoSiguiente();
+    /**
+     * Metodo de actualizacion llamado por el modelo cuando cambia su estado.
+     * Implementa la logica de vista al recibir la notificacion.
+     */
+    @Override
+    public void actualizar() {
+        // logica de vista al recibir notificacion del modelo
+        System.out.println("[" + nombre + "] modelo actualizado: estado=" + getEstado());
+    }
+
+    /**
+     * Procesa el siguiente turno para el jugador basandose en su estado actual.
+     */
+    public void turnoSiguiente() {
+        estadoActual.turnoSiguiente(this);
     }
 
     /**

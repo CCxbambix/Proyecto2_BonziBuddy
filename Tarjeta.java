@@ -1,42 +1,46 @@
 /**
- * Clase que representa una tarjeta con una pregunta.
+ * Representa una tarjeta en el juego, conteniendo una pregunta.
+ * Implementa Cloneable para permitir la creacion de copias de las tarjetas.
  */
-public class Tarjeta implements Clonable {
-
-    /**
-     * La pregunta contenida en la tarjeta.
-     */
+public class Tarjeta implements Cloneable {
     private String pregunta;
 
     /**
-     * Obtiene la pregunta contenida en la tarjeta.
-     * @return La pregunta de la tarjeta.
+     * Constructor por defecto de la clase Tarjeta.
      */
-    public String getPregunta(){
-        return this.pregunta;
+    public Tarjeta() {
     }
 
     /**
-     * Establece la pregunta de la tarjeta.
-     * @param pregunta La nueva pregunta para la tarjeta.
+     * Constructor de copia para crear una nueva tarjeta a partir de otra existente.
+     * @param otra La tarjeta a copiar.
      */
-    public void setPregunta(String pregunta){
+    private Tarjeta(Tarjeta otra) {
+        this.pregunta = otra.pregunta;
+    }
+
+    /**
+     * Obtiene la pregunta asociada a esta tarjeta.
+     * @return La cadena de texto de la pregunta.
+     */
+    public String getPregunta() {
+        return pregunta;
+    }
+
+    /**
+     * Establece la pregunta para esta tarjeta.
+     * @param pregunta La cadena de texto de la pregunta a establecer.
+     */
+    public void setPregunta(String pregunta) {
         this.pregunta = pregunta;
     }
 
     /**
-     * Otorga puntos al jugador especificado.
-     * @param jugador El jugador al que se le daran los puntos.
-     */
-    public void darPuntos(Jugador jugador) {
-    }
-
-    /**
-     * Crea una copia de esta tarjeta.
-     * @return Una copia de esta tarjeta.
+     * Crea y devuelve una copia exacta de esta tarjeta.
+     * @return Una nueva instancia de Tarjeta que es una copia de esta tarjeta.
      */
     @Override
     public Tarjeta clone() {
-        return new Tarjeta();
+        return new Tarjeta(this);
     }
 }

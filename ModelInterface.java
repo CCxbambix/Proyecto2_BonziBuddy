@@ -1,35 +1,30 @@
-import java.util.List;
-import java.util.Iterator;
-
 /**
- * Interfaz que define las operaciones que debe realizar el modelo.
+ * Interfaz que define las operaciones del Modelo en el patron MVC, extendiendo la funcionalidad de Sujeto en el patron Observer.
+ * Representa la interfaz publica del modelo para que el Controlador y otras partes del sistema interactuen con el.
  */
-public interface ModelInterface {
-     
-    /** 
-     * Registra a un jugador en el modelo.
-     *
-     * @param j El jugador a registrar.
-     */
-    void registrarJugador(Jugador j);
-
+public interface ModelInterface extends Sujeto {
     /**
-     * Inicia la partida.
+     * Inicializa la partida cargando los recursos necesarios (barajas, etc.).
      */
-    void iniciarPartida();
-
+    public void iniciarPartida();
     /**
-     * Genera una baraja de cartas con la dificultad especificada.
-     *
-     * @param dificultad La dificultad 
-     * @return Un iterador sobre las cartas generadas.
+     * Obtiene la siguiente tarjeta de la baraja de retos.
+     * @return La siguiente Tarjeta de retos.
      */
-    Iterator<Carta> generarBaraja(int dificultad);
-
+    public Tarjeta getTarjetaRetos();
     /**
-     * Notifica a los observadores de un cambio en el modelo.
+     * Obtiene la siguiente tarjeta de la baraja de eventos.
+     * @return La siguiente Tarjeta de eventos.
      */
-    void iniciarPartida();
-    Iterator<Carta> generarBaraja(int dificultad);
-    void notificar();
+    public Tarjeta getTarjetaEventos();
+    /**
+     * Obtiene la siguiente tarjeta de la baraja de preguntas.
+     * @return La siguiente Tarjeta de preguntas.
+     */
+    public Tarjeta getTarjetaPreguntas();
+    /**
+     * Obtiene el siguiente jugador en el turno.
+     * @return El siguiente Jugador.
+     */
+    public Jugador obtenerSiguienteJugador();
 }
