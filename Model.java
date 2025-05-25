@@ -8,7 +8,7 @@ import java.util.Queue;
  * Gestiona el estado del juego, la lista de jugadores (regulares y castigados)
  * y las barajas de preguntas, retos y eventos. Notifica a los observadores sobre cambios.
  */
-public class Model implements ModelInterface {
+public class Model implements ModelInterface, Sujeto {
     private final List<Jugador> todos = new ArrayList<>();
     private final List<Jugador> regulares = new ArrayList<>();
     private final List<Jugador> castigados = new ArrayList<>();
