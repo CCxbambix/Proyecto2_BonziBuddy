@@ -79,7 +79,7 @@ public class Jugador implements Observador {
     }
 
     /**
-     * Metodo de actualizacion llamado por el modelo cuando cambia su estado.   
+     * Metodo de actualizacion llamado por el modelo cuando cambia su estado.
      * Implementa la logica de vista al recibir la notificacion.
      */
     @Override
