@@ -35,7 +35,17 @@ public class Castigado implements EstadoJugador {
         return Estado.CASTIGADO;
     }
     
-    public void setTurnosCastigado(int turnos) {
-        this.turnosCastigado = turnos;
+    @Override
+    public  void turnoLogrado(){
+        jugador.incrementarPuntos();
+        turnosCastigado++;
+        if (turnosCastigado >= 2) {
+            jugador.setEstadoActual(jugador.getEstadoRegular());
+        }
+    }
+
+    @Override
+    public void turnoFallido() {
+        turnosCastigado == 0
     }
 }

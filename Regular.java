@@ -34,4 +34,12 @@ public class Regular implements EstadoJugador {
     public Estado getEstado() {
         return Estado.REGULAR;
     }
+
+    public void turnoLogrado() {
+        jugador.incrementarPuntos();
+    }
+
+    public void turnoFallido() {
+
+    }
 }

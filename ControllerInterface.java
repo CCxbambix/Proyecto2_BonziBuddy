@@ -4,11 +4,6 @@
 public interface ControllerInterface {
 
     /**
-     * Pasa el turno al siguiente jugador.
-     */
-    void pasarTurno();
-
-    /**
      * Refuerza el estado del jugador.
      *
      * @param j El jugador que reforzara su estado.

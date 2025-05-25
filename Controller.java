@@ -33,16 +33,6 @@ public class Controller implements ControllerInterface {
     }
 
     /**
-     * Pasa el turno al siguiente jugador en el modelo.
-     * Notifica a los jugadores regulares sobre el cambio de turno.
-     */
-    @Override
-    public void pasarTurno() {
-        model.obtenerSiguienteJugador();
-        model.notificarRegulares();
-    }
-
-    /**
      * Refuerza el estado de un jugador, moviendolo de castigado a regular si corresponde.
      * @param j El jugador cuyo estado se reforzara.
      */
@@ -91,21 +81,20 @@ public class Controller implements ControllerInterface {
         juego();
     }
 
-    private void turnoLogrado(Jugador jugador) {
-        
-    }
-
-    private void turnoFallido(Jugador jugador) {
-
-    }
-
     public void ronda (String opcion){
         for (int i = 0; i < model.getTotalJugadores(); i++) {
             Jugador jugador = model.obtenerSiguienteJugador();
             String turno = jugador.turnoSiguiente(opcion);
             String resultado = vista.mostrarTurno(turno);
-            if (resultado.equalsIgnoreCase("si")) turnoLogrado(jugador);
-            else turnoFallido(jugador);
+            if (resultado.equalsIgnoreCase("si")){
+                jugador.turnoLogrado();
+                vista.mostrarMensaje("Turno logrado por " + jugador.getNombre() + ", Bien hecho!");
+            }
+            else {
+                jugador.turnoFallido();
+                vista.mostrarMensaje("Turno fallido por " + jugador.getNombre());
+                vista.mostrarMensaje("Debes completar un desafio y responder una pregunta  por dos turnos seguidospara volver a ser regular.");
+            }
         }
     }
 

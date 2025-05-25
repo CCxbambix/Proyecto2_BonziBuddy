@@ -14,8 +14,7 @@ public class Jugador implements Observador {
      */
     private int puntos;    
     private ModelInterface model;
-    private int turnosCastigado;
-
++
     /**
      * Constructor de la clase Jugador.
      * Inicializa al jugador con su nombre, el modelo asociado y sus estados iniciales.
@@ -29,7 +28,6 @@ public class Jugador implements Observador {
         this.estadoRegular = new Regular(this);
         this.estadoCastigado = new Castigado(this);
         this.estadoActual = estadoRegular;
-        turnosCastigado = 0;
     }
 
     /**
@@ -52,7 +50,7 @@ public class Jugador implements Observador {
      * Obtiene la instancia del estado Regular.
      * @return La instancia de EstadoJugador para el estado Regular.
      */
-    public EstadoJugador getEstadoActivo() {
+    public EstadoJugador getEstadoRegular() {
         return estadoRegular;
     }
 
@@ -70,18 +68,6 @@ public class Jugador implements Observador {
      */
     public void setEstadoActual(EstadoJugador nuevo) {
         this.estadoActual = nuevo;
-    }
-
-    public void resetTurnosCastigado() {
-        this.turnosCastigado = 0;
-    }
-
-    public void incrementarTurnosCastigado() {
-        this.turnosCastigado++;
-    }
-
-    public int getTurnosCastigado() {
-        return turnosCastigado;
     }
     
     public int getPuntos(){
@@ -128,9 +114,11 @@ public class Jugador implements Observador {
         return estadoActual.turnoSiguiente(opcion);
     }
 
-    /**
-     * Devuelve los puntos que tiene el jugador 
-     * @return int con valor de los puntos que tiene el jugador
-     */
+    public void turnoLogrado() {
+        estadoActual.turnoLogrado();
+    }
 
+    public void turnoFallido() {
+        estadoActual.turnoFallido();
+    }
 }
