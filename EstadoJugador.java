@@ -3,12 +3,12 @@
  */
 public interface EstadoJugador {
 
-    void turnoSiguiente(String opcion);
+    public String turnoSiguiente(String opcion);
 
     /**
      * Devuelve la etiqueta de este estado
      *
      * @return El valor de enum Estado que representa este estado.
      */
-    Estado getEstado();
+    public Estado getEstado();
 }

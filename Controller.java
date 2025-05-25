@@ -1,5 +1,7 @@
 
 
+
+
 /**
  * Implementacion del controlador en el patron MVC para el juego.
  * Conecta la vista con el modelo y maneja las interacciones del usuario.
@@ -77,14 +79,39 @@ public class Controller implements ControllerInterface {
             model.registrarJugador(new Jugador(nombre, model));
             jugadorNumero++;
         }
-    }  
+    }
 
+    
     @Override
     public void iniciarPartida() {
         System.out.println("Iniciando partida...");
-        model.iniciarPartida();
         vista.mostrarBienvenida();
         registrarJugadores();
+        model.iniciarPartida();
+        juego();
+    }
+
+    private void turnoLogrado(Jugador jugador) {
         
+    }
+
+    private void turnoFallido(Jugador jugador) {
+
+    }
+
+    public void ronda (String opcion){
+        for (int i = 0; i < model.getTotalJugadores(); i++) {
+            Jugador jugador = model.obtenerSiguienteJugador();
+            String turno = jugador.turnoSiguiente(opcion);
+            String resultado = vista.mostrarTurno(turno);
+            if (resultado.equalsIgnoreCase("si")) turnoLogrado(jugador);
+            else turnoFallido(jugador);
+        }
+    }
+
+    private void juego(){
+        while (true) { 
+            Jugador jugador = model.obtenerSiguienteJugador();
+        }
     }
 }

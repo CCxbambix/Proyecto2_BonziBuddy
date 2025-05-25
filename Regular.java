@@ -22,8 +22,8 @@ public class Regular implements EstadoJugador {
      * @param jugador El jugador cuyo turno se esta procesando.
      */
     @Override
-    public void turnoSiguiente(String opcion) {
-       
+    public String turnoSiguiente(String opcion) {
+       return null;
     }
 
     /**

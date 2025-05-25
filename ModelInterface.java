@@ -27,4 +27,9 @@ public interface ModelInterface extends Sujeto {
      * @return El siguiente Jugador.
      */
     public Jugador obtenerSiguienteJugador();
+    /**
+     * Devuelve el total de jugadores registrados en el modelo.
+     * @return El numero total de jugadores.
+     */
+    public int getTotalJugadores();
 }

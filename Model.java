@@ -33,7 +33,7 @@ public class Model implements ModelInterface, Sujeto {
         }
     }
 
-    /**
+    /** 
      * Registra un jugador en la lista de jugadores regulares.
      * No agrega al jugador si ya existe en la lista 'regulares'.
      * @param jugador El jugador a registrar como regular.
@@ -157,6 +157,10 @@ public class Model implements ModelInterface, Sujeto {
         Tarjeta t = preguntas.getSiguienteTarjeta();
         notificarRegulares();
         return t;
+    }
+
+    public int getTotalJugadores() {
+        return todos.size();
     }
 
     /**

@@ -14,6 +14,7 @@ public class Jugador implements Observador {
      */
     private int puntos;    
     private ModelInterface model;
+    private int turnosCastigado;
 
     /**
      * Constructor de la clase Jugador.
@@ -28,6 +29,7 @@ public class Jugador implements Observador {
         this.estadoRegular = new Regular(this);
         this.estadoCastigado = new Castigado(this);
         this.estadoActual = estadoRegular;
+        turnosCastigado = 0;
     }
 
     /**
@@ -47,14 +49,6 @@ public class Jugador implements Observador {
     }
 
     /**
-     * Establece el estado actual del jugador.
-     * @param nuevo El nuevo estado del jugador.
-     */
-    public void setEstadoActual(EstadoJugador nuevo) {
-        this.estadoActual = nuevo;
-    }
-
-    /**
      * Obtiene la instancia del estado Regular.
      * @return La instancia de EstadoJugador para el estado Regular.
      */
@@ -69,36 +63,27 @@ public class Jugador implements Observador {
     public EstadoJugador getEstadoCastigado() {
         return estadoCastigado;
     }
-
+    
     /**
-     * Obtiene la instancia del modelo asociada a este jugador.
-     * @return La instancia del modelo.
+     * Establece el estado actual del jugador.
+     * @param nuevo El nuevo estado del jugador.
      */
-    public ModelInterface getModel() {
-        return model;
+    public void setEstadoActual(EstadoJugador nuevo) {
+        this.estadoActual = nuevo;
     }
 
-    /**
-     * Metodo de actualizacion llamado por el modelo cuando cambia su estado.
-     * Implementa la logica de vista al recibir la notificacion.
-     */
-    @Override
-    public void actualizar() {
-        // logica de vista al recibir notificacion del modelo
-        System.out.println("[" + nombre + "] modelo actualizado: estado=" + getEstado());
+    public void resetTurnosCastigado() {
+        this.turnosCastigado = 0;
     }
 
-    /**
-     * Procesa el siguiente turno para el jugador basandose en su estado actual.
-     */
-    public void turnoSiguiente(String opcion) {
-        estadoActual.turnoSiguiente(opcion);
+    public void incrementarTurnosCastigado() {
+        this.turnosCastigado++;
     }
 
-    /**
-     * Devuelve los puntos que tiene el jugador 
-     * @return int con valor de los puntos que tiene el jugador
-     */
+    public int getTurnosCastigado() {
+        return turnosCastigado;
+    }
+    
     public int getPuntos(){
         return puntos;
     }
@@ -115,9 +100,37 @@ public class Jugador implements Observador {
      * Metodo que incrementa 1 los puntos actuales del jugador 
      */
     public void incrementarPuntos(){
-        int puntosJugador = getPuntos();
-        puntosJugador++;
-        setPuntos(puntosJugador);
+        this.puntos++;
     }
+
+    /**
+     * Obtiene la instancia del modelo asociada a este jugador.
+     * @return La instancia del modelo.
+     */
+    public ModelInterface getModel() {
+        return model;
+    }
+
+    /**
+     * Metodo de actualizacion llamado por el modelo cuando cambia su estado.   
+     * Implementa la logica de vista al recibir la notificacion.
+     */
+    @Override
+    public void actualizar() {
+        // logica de vista al recibir notificacion del modelo
+        System.out.println("[" + nombre + "] modelo actualizado: estado=" + getEstado());
+    }
+
+    /**
+     * Procesa el siguiente turno para el jugador basandose en su estado actual.
+     */
+    public String turnoSiguiente(String opcion) {
+        return estadoActual.turnoSiguiente(opcion);
+    }
+
+    /**
+     * Devuelve los puntos que tiene el jugador 
+     * @return int con valor de los puntos que tiene el jugador
+     */
 
 }

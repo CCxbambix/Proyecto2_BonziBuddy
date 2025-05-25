@@ -20,12 +20,10 @@ public class Castigado implements EstadoJugador {
      * Maneja el paso del turno para un jugador en estado castigado.
      * Decrementa los turnos de castigo del jugador.
      * Si los turnos de castigo llegan a cero o menos, cambia el estado del jugador a regular.
-     * @param jugador El jugador cuyo turno se esta procesando.
      */
     @Override
-    public void turnoSiguiente(Jugador jugador) {
-    //    ModelInterface model = jugador.getModel();
-    //     Tarjeta carta = model.getTarje ();
+    public String turnoSiguiente(String opcion) {
+        return null;
     }
 
     /**

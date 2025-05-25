@@ -72,4 +72,17 @@ public class Vista implements VistaInterface{
         String nombre = sc.nextLine();
         return nombre;
     }
+
+    public String mostrarTurno(String turno){
+        System.out.println("\n" + turno);
+        System.out.println("¿El jugador completo el turno satisfactoriamente? (Si/No)");
+        while (true) { 
+            String respuesta = sc.nextLine();
+            if (respuesta.equalsIgnoreCase("Si") || respuesta.equalsIgnoreCase("No")) {
+                return respuesta;
+            } else {
+                System.out.println("Respuesta invalida. Por favor, ingrese 'Si' o 'No'.");
+            }
+        }
+    }
 }
