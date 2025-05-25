@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 
 /**
  * Implementacion del controlador en el patron MVC para el juego.
@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Controller implements ControllerInterface {
     private final ModelInterface model;
     private final Vista vista;
-    Scanner sc = new Scanner(System.in);
 
     /**
      * Constructor del Controller.
@@ -54,12 +53,7 @@ public class Controller implements ControllerInterface {
     /**
      * Inicia la partida en el modelo.
      */
-    @Override
-    public void iniciarPartida() {
-        model.iniciarPartida();
-
-    }
-
+    
     /**
      * Obtiene la instancia del modelo asociada a este controlador.
      * @return La instancia del modelo.
@@ -68,12 +62,12 @@ public class Controller implements ControllerInterface {
     public ModelInterface getModel() {
         return model;
     }
-
-    public void registrarJugadores() {
+    
+    private void registrarJugadores() {
         String nombre;
         nombre = vista.pedirNombre(); 
         model.registrarJugador(new Jugador(nombre, model));
-
+        
         int jugadorNumero = 2;
         while (true) {
             nombre = vista.pedirNombre(jugadorNumero);
@@ -84,4 +78,13 @@ public class Controller implements ControllerInterface {
             jugadorNumero++;
         }
     }  
+
+    @Override
+    public void iniciarPartida() {
+        System.out.println("Iniciando partida...");
+        model.iniciarPartida();
+        vista.mostrarBienvenida();
+        registrarJugadores();
+        
+    }
 }

@@ -14,7 +14,7 @@ public class LectorPreguntas {
      * @return Una lista de cadenas con las preguntas.
      */
     public static List<String> getPreguntas() {
-        return leerArchivo("preguntasRegular.txt");
+        return leerArchivo("preguntas.txt");
     }
 
     /**
@@ -22,7 +22,7 @@ public class LectorPreguntas {
      * @return Una lista de cadenas con los retos.
      */
     public static List<String> getRetos() {
-        return leerArchivo("preguntasCastigado.txt");
+        return leerArchivo("retos.txt");
     }
 
     /**
