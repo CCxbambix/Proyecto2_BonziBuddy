@@ -1,12 +1,14 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Implementa la interfaz ModelInterface y Sujeto en el patron MVC y Observer.
  * Gestiona el estado del juego, la lista de jugadores (regulares y castigados)
  * y las barajas de preguntas, retos y eventos. Notifica a los observadores sobre cambios.
  */
-public class Model implements ModelInterface, Sujeto {
+public class Model implements ModelInterface {
     private final List<Jugador> todos = new ArrayList<>();
     private final List<Jugador> regulares = new ArrayList<>();
     private final List<Jugador> castigados = new ArrayList<>();
@@ -15,6 +17,7 @@ public class Model implements ModelInterface, Sujeto {
     private Baraja eventos;
     private Baraja preguntas;
 
+    private final Queue<Jugador> colaJugadores = new LinkedList<>();
     // ——— Sujeto —————————————————————————————————————————————
 
     /**
@@ -115,7 +118,9 @@ public class Model implements ModelInterface, Sujeto {
         retos = new Baraja(LectorPreguntas.getRetos());
         eventos = new Baraja(LectorPreguntas.getEventos());
         preguntas = new Baraja(LectorPreguntas.getPreguntas());
-        notificarTodos();
+        for (Jugador jugador : todos ) {
+            colaJugadores.add(jugador);
+        }
     }
 
     /**
@@ -161,6 +166,8 @@ public class Model implements ModelInterface, Sujeto {
      */
     @Override
     public Jugador obtenerSiguienteJugador() {
-        return null;
+        Jugador siguienteJugador = colaJugadores.poll();
+        colaJugadores.offer(siguienteJugador);
+        return siguienteJugador;
     }
 }
