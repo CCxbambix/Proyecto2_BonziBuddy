@@ -91,8 +91,8 @@ public class Jugador implements Observador {
     /**
      * Procesa el siguiente turno para el jugador basandose en su estado actual.
      */
-    public void turnoSiguiente() {
-        estadoActual.turnoSiguiente(this);
+    public void turnoSiguiente(String opcion) {
+        estadoActual.turnoSiguiente(opcion);
     }
 
     /**
