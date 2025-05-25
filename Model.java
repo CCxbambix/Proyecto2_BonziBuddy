@@ -1,6 +1,5 @@
-import com.funado.util.LectorPreguntas;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementa la interfaz ModelInterface y Sujeto en el patron MVC y Observer.
@@ -38,8 +37,9 @@ public class Model implements ModelInterface, Sujeto {
      */
     @Override
     public void registrarRegular(Jugador jugador) {
-        if (!regulares.contains(jugador)) {
+        if (!regulares.contains(jugador) && jugador.getEstado() == Estado.REGULAR) {
             regulares.add(jugador);
+            eliminarCastigado(jugador);
         }
     }
 
@@ -50,8 +50,9 @@ public class Model implements ModelInterface, Sujeto {
      */
     @Override
     public void registrarCastigado(Jugador jugador) {
-        if (!castigados.contains(jugador)) {
+        if (!castigados.contains(jugador) && jugador.getEstado() == Estado.CASTIGADO) {
             castigados.add(jugador);
+            eliminarRegular(jugador);
         }
     }
 
@@ -160,6 +161,6 @@ public class Model implements ModelInterface, Sujeto {
      */
     @Override
     public Jugador obtenerSiguienteJugador() {
-        return ordenTurnos.obtenerSiguienteJugador();
+        return null;
     }
 }

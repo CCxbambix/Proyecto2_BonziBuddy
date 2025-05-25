@@ -8,15 +8,11 @@ public class Jugador implements Observador {
     private final EstadoJugador estadoRegular;
     private final EstadoJugador estadoCastigado;
     private EstadoJugador estadoActual;
-    private int turnosCastigado;
 
     /**
      * Representa los puntos del jugador 
      */
-    private int puntos;
-
-    private Estado estado;
-    
+    private int puntos;    
     private ModelInterface model;
 
     /**
@@ -29,11 +25,9 @@ public class Jugador implements Observador {
     public Jugador(String nombre, ModelInterface model) {
         this.nombre = nombre;
         this.model = model;
-        this.estadoRegular = new Regular();
-        this.estadoCastigado = new Castigado();
+        this.estadoRegular = new Regular(this);
+        this.estadoCastigado = new Castigado(this);
         this.estadoActual = estadoRegular;
-        this.turnosCastigado = 0;
-        model.registrarJugador(this);
     }
 
     /**
@@ -50,14 +44,6 @@ public class Jugador implements Observador {
      */
     public Estado getEstado() {
         return estadoActual.getEstado();
-    }
-
-    /**
-     * Obtiene el numero de turnos que le quedan al jugador en estado castigado.
-     * @return El numero de turnos castigado.
-     */
-    public int getTurnosCastigado() {
-        return turnosCastigado;
     }
 
     /**
@@ -85,24 +71,6 @@ public class Jugador implements Observador {
     }
 
     /**
-     * Establece el numero de turnos que el jugador estara castigado.
-     * @param cantidad El numero de turnos de castigo.
-     */
-    public void incrementarTurnosCastigado(int cantidad) {
-        this.turnosCastigado = cantidad;
-    }
-
-    /**
-     * Decrementa en uno el numero de turnos que le quedan al jugador en estado castigado.
-     * Asegura que el contador no baje de cero.
-     */
-    public void decrementarTurnosCastigado() {
-        if (turnosCastigado > 0) {
-            turnosCastigado--;
-        }
-    }
-
-    /**
      * Obtiene la instancia del modelo asociada a este jugador.
      * @return La instancia del modelo.
      */
@@ -111,7 +79,7 @@ public class Jugador implements Observador {
     }
 
     /**
-     * Metodo de actualizacion llamado por el modelo cuando cambia su estado.
+     * Metodo de actualizacion llamado por el modelo cuando cambia su estado.   
      * Implementa la logica de vista al recibir la notificacion.
      */
     @Override

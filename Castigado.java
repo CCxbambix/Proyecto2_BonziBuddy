@@ -3,8 +3,19 @@
  * En este estado, el jugador no puede avanzar por un numero determinado de turnos.
  */
 public class Castigado implements EstadoJugador {
-    private static final int TURNOS_PENA = 2;
+    private int turnosCastigado;
+    private final Jugador jugador;
 
+    /**
+     * Constructor de la clase Castigado.
+     * Inicializa el estado castigado del jugador.
+     * @param jugador El jugador que tiene este estado.
+     */
+    public Castigado(Jugador jugador) {
+        this.jugador = jugador;
+        turnosCastigado = 0;
+    }
+    
     /**
      * Maneja el paso del turno para un jugador en estado castigado.
      * Decrementa los turnos de castigo del jugador.
@@ -13,14 +24,8 @@ public class Castigado implements EstadoJugador {
      */
     @Override
     public void turnoSiguiente(Jugador jugador) {
-        // Decrementa su cuenta de turnos castigado
-        jugador.decrementarTurnosCastigado();
-        // Si ya cumplio la pena, vuelve a regular
-        if (jugador.getTurnosCastigado() <= 0) {
-            jugador.setEstadoActual(jugador.getEstadoActivo());
-            // Notifica a los regulares de que el grupo cambio
-            jugador.getModel().notificarRegulares();
-        }
+    //    ModelInterface model = jugador.getModel();
+    //     Tarjeta carta = model.getTarje ();
     }
 
     /**
@@ -30,5 +35,9 @@ public class Castigado implements EstadoJugador {
     @Override
     public Estado getEstado() {
         return Estado.CASTIGADO;
+    }
+    
+    public void setTurnosCastigado(int turnos) {
+        this.turnosCastigado = turnos;
     }
 }

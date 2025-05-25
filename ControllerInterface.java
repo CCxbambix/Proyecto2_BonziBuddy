@@ -4,14 +4,6 @@
 public interface ControllerInterface {
 
     /**
-     * Procesa la respuesta de un jugador.
-     *
-     * @param j El jugador que respondio.
-     * @param r La respuesta del jugador.
-     */
-    void procesadorRespuesta(Jugador j, Respuesta r);
-
-    /**
      * Pasa el turno al siguiente jugador.
      */
     void pasarTurno();

@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Implementacion del controlador en el patron MVC para el juego.
  * Conecta la vista con el modelo y maneja las interacciones del usuario.
@@ -5,6 +7,7 @@
 public class Controller implements ControllerInterface {
     private final ModelInterface model;
     private final Vista vista;
+    Scanner sc = new Scanner(System.in);
 
     /**
      * Constructor del Controller.
@@ -15,7 +18,6 @@ public class Controller implements ControllerInterface {
     public Controller(ModelInterface model) {
         this.model = model;
         this.vista = new Vista(this);
-        iniciarPartida();
     }
 
     /**
@@ -27,26 +29,6 @@ public class Controller implements ControllerInterface {
         Jugador jugador = new Jugador(nombre, model);
         model.registrarJugador(jugador);
         vista.mostrarMensaje("Jugador registrado: " + nombre);
-    }
-
-    /**
-     * Procesa la respuesta de un jugador a una pregunta.
-     * Si la respuesta es correcta, incrementa la puntuacion del jugador y refuerza su estado.
-     * Si la respuesta es incorrecta, mueve al jugador al estado de castigado.
-     * @param j El jugador que dio la respuesta.
-     * @param r La respuesta dada por el jugador.
-     */
-    @Override
-    public void procesarRespuesta(Jugador j, Respuesta r) {
-        if (r.esCorrecta()) {
-            j.incrementarPuntuacion(1);
-            reforzarEstado(j);
-            model.notificarTodos();
-        } else {
-            model.eliminarRegular(j);
-            model.registrarCastigado(j);
-            model.notificarCastigados();
-        }
     }
 
     /**
@@ -75,6 +57,7 @@ public class Controller implements ControllerInterface {
     @Override
     public void iniciarPartida() {
         model.iniciarPartida();
+
     }
 
     /**
@@ -85,4 +68,20 @@ public class Controller implements ControllerInterface {
     public ModelInterface getModel() {
         return model;
     }
+
+    public void registrarJugadores() {
+        String nombre;
+        nombre = vista.pedirNombre(); 
+        model.registrarJugador(new Jugador(nombre, model));
+
+        int jugadorNumero = 2;
+        while (true) {
+            nombre = vista.pedirNombre(jugadorNumero);
+            if (nombre.equalsIgnoreCase("fin")) {
+                break;
+            }
+            model.registrarJugador(new Jugador(nombre, model));
+            jugadorNumero++;
+        }
+    }  
 }

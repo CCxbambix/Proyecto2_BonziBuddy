@@ -16,30 +16,30 @@ public class Anfitrion implements ControllerInterface {
      * Registra un nuevo jugador en el modelo.
      * @param j El jugador a registrar.
      */
-    @Override
+
     public void registrarJugador(Jugador j) {
         model.registrarJugador(j);
     }
 
-    /**
-     * Procesa la respuesta de un jugador a una pregunta.
-     * Si la respuesta es correcta, incrementa la puntuacion del jugador y refuerza su estado.
-     * Si la respuesta es incorrecta, mueve al jugador al estado de castigado.
-     * @param j El jugador que dio la respuesta.
-     * @param r La respuesta dada por el jugador.
-     */
-    @Override
-    public void procesarRespuesta(Jugador j, Respuesta r) {
-        if (r.esCorrecta()) {
-            j.incrementarPuntuacion(1);
-            reforzarEstado(j);
-            model.notificarTodos();
-        } else {
-            model.eliminarRegular(j);
-            model.registrarCastigado(j);
-            model.notificarCastigados();
-        }
-    }
+    // /**
+    //  * Procesa la respuesta de un jugador a una pregunta.
+    //  * Si la respuesta es correcta, incrementa la puntuacion del jugador y refuerza su estado.
+    //  * Si la respuesta es incorrecta, mueve al jugador al estado de castigado.
+    //  * @param j El jugador que dio la respuesta.
+    //  * @param r La respuesta dada por el jugador.
+    //  */
+    // @Override
+    // public void procesarRespuesta(Jugador j, Respuesta r) {
+    //     if (r.esCorrecta()) {
+    //         j.incrementarPuntuacion(1);
+    //         reforzarEstado(j);
+    //         model.notificarTodos();
+    //     } else {
+    //         model.eliminarRegular(j);
+    //         model.registrarCastigado(j);
+    //         model.notificarCastigados();
+    //     }
+    // }
 
     /**
      * Pasa el turno al siguiente jugador en el modelo.
