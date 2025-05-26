@@ -5,9 +5,9 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 
 /**
- * Implementa la interfaz ModelInterface y Sujeto en el patron MVC y Observer.
- * Gestiona el estado del juego, la lista de jugadores (regulares y castigados)
- * y las barajas de preguntas, retos y eventos. Notifica a los observadores sobre cambios.
+ * Implementa ModelInterface y Sujeto en el patron MVC y Observer.
+ * Gestiona el estado del juego, las listas de jugadores y las barajas de retos,
+ * eventos y preguntas. Notifica a los observadores sobre cambios.
  */
 public class Model implements ModelInterface, Sujeto {
     private final List<Jugador> todos = new ArrayList<>();
@@ -20,17 +20,16 @@ public class Model implements ModelInterface, Sujeto {
 
     private final Queue<Jugador> colaJugadores = new LinkedList<>();
 
-    ControllerInterface controller;
-
+    private ControllerInterface controller;
     private String eventoActual;
 
-
-    // ——— Sujeto —————————————————————————————————————————————
+    // —— Sujeto ——————————————————————————————————————————
 
     /**
-     * Registra un jugador en la lista de todos los jugadores y en la lista de regulares.
-     * No agrega al jugador si ya existe en la lista 'todos'.
-     * @param jugador El jugador a registrar.
+     * Registra un jugador en la lista de todos y en la de regulares
+     * si no existe previamente.
+     *
+     * @param jugador el jugador a registrar
      */
     @Override
     public void registrarJugador(Jugador jugador) {
@@ -40,40 +39,63 @@ public class Model implements ModelInterface, Sujeto {
         }
     }
 
+    /**
+     * Devuelve el controlador asociado al modelo.
+     *
+     * @return el controlador
+     */
     public ControllerInterface getController() {
         return controller;
     }
 
+    /**
+     * Obtiene la descripcion del ultimo evento ejecutado.
+     *
+     * @return la descripcion del evento actual
+     */
     public String getEventoActual() {
         return eventoActual;
     }
 
-    public void setEventoActual(){
+    /**
+     * Selecciona la siguiente tarjeta de eventos y actualiza eventoActual.
+     */
+    public void setEventoActual() {
         this.eventoActual = eventos.getSiguienteTarjeta().getPregunta();
     }
 
-    public void incrementarPuntosCastigado(){
+    /**
+     * Incrementa puntos de todos los jugadores castigados.
+     */
+    public void incrementarPuntosCastigado() {
         for (Jugador j : castigados) {
             j.incrementarPuntos();
         }
     }
 
-    public void incrementarPuntosRegular(){
+    /**
+     * Incrementa puntos de todos los jugadores regulares.
+     */
+    public void incrementarPuntosRegular() {
         for (Jugador j : regulares) {
             j.incrementarPuntos();
         }
     }
 
-    public void incrementarPuntosTodos(){
+    /**
+     * Incrementa puntos de todos los jugadores.
+     */
+    public void incrementarPuntosTodos() {
         for (Jugador j : todos) {
             j.incrementarPuntos();
         }
     }
 
-    /** 
-     * Registra un jugador en la lista de jugadores regulares.
-     * No agrega al jugador si ya existe en la lista 'regulares'.
-     * @param jugador El jugador a registrar como regular.
+    /**
+     * Agrega un jugador a la lista de regulares si no existe y
+     * su estado es REGULAR.
+     *
+     * @param jugador el jugador a agregar como regular
      */
     @Override
     public void registrarRegular(Jugador jugador) {
@@ -84,9 +106,10 @@ public class Model implements ModelInterface, Sujeto {
     }
 
     /**
-     * Registra un jugador en la lista de jugadores castigados.
-     * No agrega al jugador si ya existe en la lista 'castigados'.
-     * @param jugador El jugador a registrar como castigado.
+     * Agrega un jugador a la lista de castigados si no existe y
+     * su estado es CASTIGADO.
+     *
+     * @param jugador el jugador a agregar como castigado
      */
     @Override
     public void registrarCastigado(Jugador jugador) {
@@ -97,8 +120,9 @@ public class Model implements ModelInterface, Sujeto {
     }
 
     /**
-     * Elimina un jugador de la lista de jugadores regulares.
-     * @param jugador El jugador a eliminar de la lista de regulares.
+     * Elimina un jugador de la lista de regulares.
+     *
+     * @param jugador el jugador a eliminar
      */
     @Override
     public void eliminarRegular(Jugador jugador) {
@@ -106,8 +130,9 @@ public class Model implements ModelInterface, Sujeto {
     }
 
     /**
-     * Elimina un jugador de la lista de jugadores castigados.
-     * @param jugador El jugador a eliminar de la lista de castigados.
+     * Elimina un jugador de la lista de castigados.
+     *
+     * @param jugador el jugador a eliminar
      */
     @Override
     public void eliminarCastigado(Jugador jugador) {
@@ -115,7 +140,7 @@ public class Model implements ModelInterface, Sujeto {
     }
 
     /**
-     * Notifica a todos los jugadores (observadores) sobre un cambio en el modelo.
+     * Notifica a todos los jugadores registrados.
      */
     @Override
     public void notificarTodos() {
@@ -125,7 +150,7 @@ public class Model implements ModelInterface, Sujeto {
     }
 
     /**
-     * Notifica solo a los jugadores en estado regular sobre un cambio en el modelo.
+     * Notifica solamente a los jugadores regulares.
      */
     @Override
     public void notificarRegulares() {
@@ -135,7 +160,7 @@ public class Model implements ModelInterface, Sujeto {
     }
 
     /**
-     * Notifica solo a los jugadores en estado castigado sobre un cambio en el modelo.
+     * Notifica solamente a los jugadores castigados.
      */
     @Override
     public void notificarCastigados() {
@@ -144,69 +169,77 @@ public class Model implements ModelInterface, Sujeto {
         }
     }
 
-    // ——— ModelInterface —————————————————————————————————————
+    // —— ModelInterface ————————————————————————————————————
 
     /**
-     * Inicializa la partida cargando las barajas de preguntas, retos y eventos.
-     * Notifica a todos los jugadores que la partida ha iniciado.
+     * Inicializa la partida cargando las barajas de retos, eventos y preguntas.
+     * Agrega todos los jugadores a la cola de turnos.
+     *
+     * @param controller el controlador que maneja el flujo del juego
      */
     @Override
     public void iniciarPartida(ControllerInterface controller) {
         this.controller = controller;
-        retos = new Baraja(LectorPreguntas.getRetos());
-        eventos = new Baraja(LectorPreguntas.getEventos());
-        preguntas = new Baraja(LectorPreguntas.getPreguntas());
-        for (Jugador jugador : todos ) {
+        retos    = new Baraja(LectorPreguntas.getRetos());
+        eventos  = new Baraja(LectorPreguntas.getEventos());
+        preguntas= new Baraja(LectorPreguntas.getPreguntas());
+        for (Jugador jugador : todos) {
             colaJugadores.add(jugador);
         }
     }
 
     /**
-     * Obtiene la siguiente tarjeta de la baraja de retos.
-     * Notifica a los jugadores regulares despues de obtener la tarjeta.
-     * @return La siguiente tarjeta de retos.
+     * Obtiene una tarjeta de retos aleatoria.
+     *
+     * @return la siguiente tarjeta de retos
      */
     @Override
     public Tarjeta getTarjetaRetos() {
-        Tarjeta t = retos.getTarjetaRandom();
-        return t;
+        return retos.getTarjetaRandom();
     }
 
     /**
-     * Obtiene la siguiente tarjeta de la baraja de eventos.
-     * Notifica a todos los jugadores despues de obtener la tarjeta.
-     * @return La siguiente tarjeta de eventos.
+     * Obtiene una tarjeta de eventos aleatoria.
+     *
+     * @return la siguiente tarjeta de eventos
      */
     @Override
     public Tarjeta getTarjetaEventos() {
-        Tarjeta t = eventos.getTarjetaRandom();
-        return t;
+        return eventos.getTarjetaRandom();
     }
 
     /**
-     * Obtiene la siguiente tarjeta de la baraja de preguntas.
-     * Notifica a los jugadores regulares despues de obtener la tarjeta.
-     * @return La siguiente tarjeta de preguntas.
+     * Obtiene una tarjeta de preguntas aleatoria.
+     *
+     * @return la siguiente tarjeta de preguntas
      */
     @Override
     public Tarjeta getTarjetaPreguntas() {
-        Tarjeta t = preguntas.getTarjetaRandom();
-        return t;
+        return preguntas.getTarjetaRandom();
     }
 
+    /**
+     * Devuelve el numero total de jugadores registrados.
+     *
+     * @return cantidad de jugadores
+     */
     public int getTotalJugadores() {
         return todos.size();
     }
 
     /**
-     * Obtiene el siguiente jugador en el turno utilizando la cola de jugadores.
-     * @return El siguiente Jugador en la secuencia de turnos.
-     * @throws NoSuchElementException si no hay jugadores en la cola de turnos.
+     * Obtiene el siguiente jugador en la secuencia de turnos.
+     *
+     * @return el jugador cuyo turno es siguiente
+     * @throws NoSuchElementException si la cola de turnos esta vacia
      */
     @Override
     public Jugador obtenerSiguienteJugador() {
-        Jugador siguienteJugador = colaJugadores.poll();
-        colaJugadores.offer(siguienteJugador);
-        return siguienteJugador;
+        if (colaJugadores.isEmpty()) {
+            throw new NoSuchElementException("No hay jugadores en la cola de turnos");
+        }
+        Jugador siguiente = colaJugadores.poll();
+        colaJugadores.offer(siguiente);
+        return siguiente;
     }
 }

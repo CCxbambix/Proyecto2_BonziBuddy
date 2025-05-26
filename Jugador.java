@@ -1,28 +1,22 @@
-
-import jdk.dynalink.linker.GuardingTypeConverterFactory;
-
 /**
  * Representa a un jugador en el juego.
- * Implementa la interfaz Observador para ser notificado por el modelo.
- * Maneja su estado actual (regular o castigado) y su interaccion con el modelo.
+ * Implementa Observador para recibir notificaciones del modelo.
+ * Gestiona su estado (regular o castigado) y su interaccion con el modelo.
  */
 public class Jugador implements Observador {
     private final String nombre;
     private final EstadoJugador estadoRegular;
     private final EstadoJugador estadoCastigado;
     private EstadoJugador estadoActual;
+    private int puntos;
+    private ModelInterface model;
 
     /**
-     * Representa los puntos del jugador 
-     */
-    private int puntos;    
-    private ModelInterface model;
-    /**
-     * Constructor de la clase Jugador.
-     * Inicializa al jugador con su nombre, el modelo asociado y sus estados iniciales.
-     * Se registra automaticamente en el modelo al ser creado.
-     * @param nombre El nombre del jugador.
-     * @param model La instancia del modelo con la que interactuara el jugador.
+     * Construye un jugador con nombre y modelo asociados.
+     * Inicializa los estados regular y castigado, y fija el estado inicial a regular.
+     *
+     * @param nombre el nombre del jugador
+     * @param model  la instancia del modelo con la que interactuara
      */
     public Jugador(String nombre, ModelInterface model) {
         this.nombre = nombre;
@@ -30,96 +24,118 @@ public class Jugador implements Observador {
         this.estadoRegular = new Regular(this);
         this.estadoCastigado = new Castigado(this);
         this.estadoActual = estadoRegular;
+        this.puntos = 0;
     }
 
     /**
      * Obtiene el nombre del jugador.
-     * @return El nombre del jugador.
+     *
+     * @return el nombre del jugador
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
-     * Obtiene el estado actual del jugador (REGULAR o CASTIGADO).
-     * @return El estado actual del jugador.
+     * Obtiene el estado actual del jugador.
+     *
+     * @return el valor de enum Estado que representa el estado actual
      */
     public Estado getEstado() {
         return estadoActual.getEstado();
     }
 
     /**
-     * Obtiene la instancia del estado Regular.
-     * @return La instancia de EstadoJugador para el estado Regular.
+     * Obtiene la instancia de EstadoJugador para el estado regular.
+     *
+     * @return objeto EstadoJugador que representa el estado regular
      */
     public EstadoJugador getEstadoRegular() {
         return estadoRegular;
     }
 
     /**
-     * Obtiene la instancia del estado Castigado.
-     * @return La instancia de EstadoJugador para el estado Castigado.
+     * Obtiene la instancia de EstadoJugador para el estado castigado.
+     *
+     * @return objeto EstadoJugador que representa el estado castigado
      */
     public EstadoJugador getEstadoCastigado() {
         return estadoCastigado;
     }
-    
+
     /**
-     * Establece el estado actual del jugador.
-     * @param nuevo El nuevo estado del jugador.
+     * Establece un nuevo estado actual para el jugador.
+     *
+     * @param nuevo el nuevo estado del jugador
      */
     public void setEstadoActual(EstadoJugador nuevo) {
         this.estadoActual = nuevo;
     }
-    
-    public int getPuntos(){
+
+    /**
+     * Obtiene los puntos acumulados del jugador.
+     *
+     * @return el numero de puntos del jugador
+     */
+    public int getPuntos() {
         return puntos;
     }
 
     /**
-     * Metodo que cambia el valor de los puntos del jugador 
-     * @param int con valor a los nuevos puntos del jugador
+     * Establece la cantidad de puntos del jugador.
+     *
+     * @param puntos el nuevo valor de puntos
      */
-    public void setPuntos(int puntos){
-        this.puntos= puntos;
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
     }
 
     /**
-     * Metodo que incrementa 1 los puntos actuales del jugador 
+     * Incrementa en uno los puntos actuales del jugador.
      */
-    public void incrementarPuntos(){
+    public void incrementarPuntos() {
         this.puntos++;
     }
 
     /**
-     * Obtiene la instancia del modelo asociada a este jugador.
-     * @return La instancia del modelo.
+     * Obtiene la instancia del modelo asociada al jugador.
+     *
+     * @return la instancia del modelo
      */
     public ModelInterface getModel() {
         return model;
     }
 
     /**
-     * Metodo de actualizacion llamado por el modelo cuando cambia su estado.   
-     * Implementa la logica de vista al recibir la notificacion.
+     * Metodo invocado por el modelo al emitir una notificacion.
+     * Muestra en la vista un mensaje indicando el evento actual.
      */
     @Override
     public void actualizar() {
-        Controller controller = (Controller)model.getController();
+        Controller controller = (Controller) model.getController();
         controller.getVista().mostrarMensaje("Jugador " + nombre + " " + model.getEventoActual());
     }
 
     /**
-     * Procesa el siguiente turno para el jugador basandose en su estado actual.
+     * Procesa el siguiente turno segun el estado actual del jugador.
+     *
+     * @param opcion la opcion de turno ("pregunta" o "reto")
+     * @return el mensaje generado para el turno
      */
     public String turnoSiguiente(String opcion) {
         return estadoActual.turnoSiguiente(opcion);
     }
 
+    /**
+     * Notifica al estado actual que el turno fue logrado.
+     */
     public void turnoLogrado() {
         estadoActual.turnoLogrado();
     }
 
+    /**
+     * Notifica al estado actual que el turno fue fallido.
+     */
     public void turnoFallido() {
         estadoActual.turnoFallido();
     }

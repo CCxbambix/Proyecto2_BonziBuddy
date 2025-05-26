@@ -1,8 +1,7 @@
 /**
  * Interfaz que define el rol de Sujeto en el patron Observer.
  * Un Sujeto es un objeto que mantiene una lista de observadores y les notifica automaticamente
- * de cualquier cambio en su estado, generalmente llamando a uno de sus metodos.
- * En este contexto, el Modelo actua como Sujeto, y los Jugadores actuan como Observadores.
+ * de cualquier cambio en su estado
  */
 public interface Sujeto {
     /**

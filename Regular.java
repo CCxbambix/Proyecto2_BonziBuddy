@@ -4,45 +4,62 @@
  */
 public class Regular implements EstadoJugador {
 
-
     private final Jugador jugador;
 
     /**
-     * Constructor de la clase Regular.
-     * Inicializa el estado regular del jugador.
-     * @param jugador El jugador que tiene este estado.
+     * Construye el estado Regular para un jugador dado.
+     *
+     * @param jugador el jugador que asumira el estado regular
      */
     public Regular(Jugador jugador) {
         this.jugador = jugador;
     }
     
     /**
-     * Maneja el paso del turno para un jugador en estado regular.
-     * En este estado, el jugador no tiene una logica especial para el turno en esta implementacion basica.
-     * @param jugador El jugador cuyo turno se esta procesando.
+     * Genera el mensaje para el siguiente turno de un jugador regular.
+     * Si la opcion es "pregunta", obtiene una tarjeta de preguntas;
+     * en caso contrario, obtiene una tarjeta de retos.
+     *
+     * @param opcion indica si es turno de "pregunta" o "reto"
+     * @return mensaje con la instruccion o contenido de la tarjeta
      */
     @Override
     public String turnoSiguiente(String opcion) {
         Tarjeta tarjeta;
-        if (opcion.equalsIgnoreCase("pregunta")) tarjeta = jugador.getModel().getTarjetaPreguntas();
-        else tarjeta = jugador.getModel().getTarjetaRetos();
-        String mensaje =  "Turno de " + jugador.getNombre() + ":\n" + tarjeta.getPregunta();
+        if (opcion.equalsIgnoreCase("pregunta")) {
+            tarjeta = jugador.getModel().getTarjetaPreguntas();
+        } else {
+            tarjeta = jugador.getModel().getTarjetaRetos();
+        }
+        String mensaje = "Turno de " + jugador.getNombre() + ":\n"
+                       + tarjeta.getPregunta();
         return mensaje;
     }
 
     /**
-     * Obtiene el tipo de estado actual.
-     * @return El estado actual, que es REGULAR.
+     * Obtiene la etiqueta de este estado.
+     *
+     * @return Estado.REGULAR
      */
     @Override
     public Estado getEstado() {
         return Estado.REGULAR;
     }
 
+    /**
+     * Maneja la logica cuando el jugador cumple el turno.
+     * Incrementa sus puntos.
+     */
+    @Override
     public void turnoLogrado() {
         jugador.incrementarPuntos();
     }
 
+    /**
+     * Maneja la logica cuando el jugador falla el turno.
+     * Cambia su estado a castigado.
+     */
+    @Override
     public void turnoFallido() {
         jugador.setEstadoActual(jugador.getEstadoCastigado());
     }

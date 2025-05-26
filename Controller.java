@@ -9,10 +9,10 @@ public class Controller implements ControllerInterface {
     private final Vista vista;
 
     /**
-     * Constructor del Controller.
-     * Inicializa el controlador con una instancia del modelo y crea la vista.
-     * Ademas, inicia la partida al ser creado.
-     * @param model La instancia del modelo con la que interactuara el controlador.
+     * Construye un nuevo Controller con el modelo proporcionado.
+     * Crea la vista asociada.
+     *
+     * @param model la instancia del modelo con la que interactuara el controlador
      */
     public Controller(ModelInterface model) {
         this.model = model;
@@ -20,9 +20,9 @@ public class Controller implements ControllerInterface {
     }
 
     /**
-     * Registra un nuevo jugador con el nombre proporcionado en el modelo.
-     * Notifica a la vista que el jugador ha sido registrado.
-     * @param nombre El nombre del jugador a registrar.
+     * Registra un nuevo jugador en el modelo e informa a la vista.
+     *
+     * @param nombre el nombre del jugador a registrar
      */
     public void registrarJugador(String nombre) {
         Jugador jugador = new Jugador(nombre, model);
@@ -31,8 +31,9 @@ public class Controller implements ControllerInterface {
     }
 
     /**
-     * Refuerza el estado de un jugador, moviendolo de castigado a regular si corresponde.
-     * @param j El jugador cuyo estado se reforzara.
+     * Refuerza el estado de un jugador moviendolo de castigado a regular.
+     *
+     * @param j el jugador cuyo estado se reforzara
      */
     @Override
     public void reforzarEstado(Jugador j) {
@@ -41,30 +42,37 @@ public class Controller implements ControllerInterface {
     }
 
     /**
-     * Inicia la partida en el modelo.
-     */
-    
-    /**
-     * Obtiene la instancia del modelo asociada a este controlador.
-     * @return La instancia del modelo.
+     * Devuelve el modelo asociado al controlador.
+     *
+     * @return la instancia del modelo
      */
     @Override
     public ModelInterface getModel() {
         return model;
     }
     
+    /**
+     * Devuelve la vista asociada al controlador.
+     *
+     * @return la instancia de la vista
+     */
     public Vista getVista() {
         return vista;
     }
 
+    /**
+     * Solicita los nombres de los jugadores hasta que se ingrese "fin"
+     * y los registra en el modelo.
+     */
     private void registrarJugadores() {
         String nombre;
-        nombre = vista.pedirNombre(); 
-        model.registrarJugador(new Jugador(nombre, model));
-        
-        int jugadorNumero = 2;
+        int jugadorNumero = 1;
         while (true) {
-            nombre = vista.pedirNombre(jugadorNumero);
+            if (jugadorNumero == 1) {
+                nombre = vista.pedirNombre();
+            } else {
+                nombre = vista.pedirNombre(jugadorNumero);
+            }
             if (nombre.equalsIgnoreCase("fin")) {
                 break;
             }
@@ -73,33 +81,42 @@ public class Controller implements ControllerInterface {
         }
     }
 
-    
+    /**
+     * Inicia la partida: muestra bienvenida, registra jugadores,
+     * lanza el modelo y comienza el bucle de juego.
+     */
     @Override
     public void iniciarPartida() {
-        System.out.println("Iniciando partida...");
         vista.mostrarBienvenida();
         registrarJugadores();
         model.iniciarPartida(this);
         juego();
     }
 
-    public void ronda (String opcion){
+    /**
+     * Ejecuta una ronda de turnos, alternando entre preguntas y retos.
+     *
+     * @param opcion indica si es turno de "pregunta" o "reto"
+     */
+    public void ronda(String opcion) {
         for (int i = 0; i < model.getTotalJugadores(); i++) {
             Jugador jugador = model.obtenerSiguienteJugador();
             String turno = jugador.turnoSiguiente(opcion);
             String resultado = vista.mostrarTurno(turno);
-            if (resultado.equalsIgnoreCase("si")){
+            if (resultado.equalsIgnoreCase("si")) {
                 jugador.turnoLogrado();
-                vista.mostrarMensaje("Turno logrado por " + jugador.getNombre() + ", Bien hecho!");
-            }
-            else {
+                vista.mostrarMensaje("Turno logrado por " + jugador.getNombre() + ", bien hecho!");
+            } else {
                 jugador.turnoFallido();
                 vista.mostrarMensaje("Turno fallido por " + jugador.getNombre());
-                vista.mostrarMensaje("Debes completar un desafio y responder una pregunta  por dos turnos seguidospara volver a ser regular.");
+                vista.mostrarMensaje("Debes completar un desafio y responder una pregunta por dos turnos seguidos para volver a ser regular.");
             }
         }
     }
 
+    /**
+     * Evento especial para jugadores castigados.
+     */
     private void eventoCaso0() {
         vista.mostrarMensaje("Los jugadores castigados participaran en un evento especial.");
         model.notificarCastigados();
@@ -108,11 +125,14 @@ public class Controller implements ControllerInterface {
             vista.mostrarMensaje("Bien hecho, los castigados han completado el evento.");
             model.incrementarPuntosCastigado();
         } else {
-            vista.mostrarMensaje("No se dara puntos a los castigados por no completar el evento.");
+            vista.mostrarMensaje("No se daran puntos a los castigados por no completar el evento.");
         }
     }
 
-    private void eventoCaso1(){
+    /**
+     * Evento especial para jugadores regulares.
+     */
+    private void eventoCaso1() {
         vista.mostrarMensaje("Los jugadores regulares participaran en un evento especial.");
         model.notificarRegulares();
         String completado = vista.mostrarEvento();
@@ -120,11 +140,14 @@ public class Controller implements ControllerInterface {
             vista.mostrarMensaje("Bien hecho, los regulares han completado el evento.");
             model.incrementarPuntosRegular();
         } else {
-            vista.mostrarMensaje("No se dara puntos a los regulares por no completar el evento.");
+            vista.mostrarMensaje("No se daran puntos a los regulares por no completar el evento.");
         }
     }
 
-    private void eventoCaso2(){
+    /**
+     * Evento especial para todos los jugadores.
+     */
+    private void eventoCaso2() {
         vista.mostrarMensaje("Todos los jugadores participaran en un evento especial.");
         model.notificarTodos();
         String completado = vista.mostrarEvento();
@@ -132,11 +155,14 @@ public class Controller implements ControllerInterface {
             vista.mostrarMensaje("Bien hecho, todos los jugadores han completado el evento.");
             model.incrementarPuntosTodos();
         } else {
-            vista.mostrarMensaje("No se dara puntos a los jugadores por no completar el evento.");
+            vista.mostrarMensaje("No se daran puntos a los jugadores por no completar el evento.");
         }
     }
 
-    private void eventoCaso3(){
+    /**
+     * Evento que castiga a todos los jugadores.
+     */
+    private void eventoCaso3() {
         vista.mostrarMensaje("Todos los jugadores seran castigados");
         for (int i = 0; i < model.getTotalJugadores(); i++) {
             Jugador j = model.obtenerSiguienteJugador();
@@ -144,10 +170,13 @@ public class Controller implements ControllerInterface {
         }
     }
 
-    public void lanzarEvento(){
+    /**
+     * Lanza un evento aleatorio entre cuatro posibles.
+     */
+    public void lanzarEvento() {
         Random random = new Random();
         model.setEventoActual();
-        int evento = random.nextInt(4); // Genera un numero aleatorio entre 0 y 3
+        int evento = random.nextInt(4);
         switch (evento) {
             case 0:
                 eventoCaso0();
@@ -165,39 +194,48 @@ public class Controller implements ControllerInterface {
         }
     }
 
-    public void despedida(){
+    /**
+     * Muestra la despedida con puntajes finales.
+     */
+    public void despedida() {
         vista.mostrarMensaje("Gracias por jugar FUNADO!");
-        String puntajes = "Puntajes finales:\n";
+        StringBuilder puntajes = new StringBuilder("Puntajes finales:\n");
         for (int i = 0; i < model.getTotalJugadores(); i++) {
             Jugador j = model.obtenerSiguienteJugador();
-            puntajes += j.getNombre() + ": " + j.getPuntos() + " puntos\n";
+            puntajes.append(j.getNombre())
+                    .append(": ")
+                    .append(j.getPuntos())
+                    .append(" puntos\n");
         }
-        vista.mostrarMensaje(puntajes);
+        vista.mostrarMensaje(puntajes.toString());
     }
 
-    private void juego(){
-        Boolean opcion = true;
+    /**
+     * Bucle principal de juego que alterna rondas de preguntas y retos,
+     * lanza eventos cada tres rondas, y permite continuar o terminar tras diez rondas.
+     */
+    private void juego() {
+        boolean opcion = true;
         int rondas = 0;
         int rondasTotales = 0;
-        while (true){
-            if (opcion) ronda("pregunta");
-            else ronda("reto");
-            opcion = !opcion; // Alterna entre pregunta y desafio
+        while (true) {
+            ronda(opcion ? "pregunta" : "reto");
+            opcion = !opcion;
             rondas++;
             rondasTotales++;
-            if (rondas > 2){
+            if (rondas > 2) {
                 rondas = 0;
                 lanzarEvento();
             }
-            if (rondasTotales >=10){
-                String decisionAnfitrion = vista.continuarJuego();
-                if (decisionAnfitrion.equalsIgnoreCase("no")) {
+            if (rondasTotales >= 10) {
+                String decision = vista.continuarJuego();
+                if (decision.equalsIgnoreCase("no")) {
                     despedida();
                     break;
                 } else {
-                    rondasTotales = 0; // Reinicia las rondas totales si se decide continuar
+                    rondasTotales = 0;
                 }
             }
-        }   
+        }
     }
 }

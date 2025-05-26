@@ -1,18 +1,18 @@
 import java.util.Scanner;
 
 /**
- * La clase Vista representa la interfaz de usuario del juego.
- * Se encarga de interactuar con el usuario, mostrar informacion
- * y recibir entradas.
+ * Representa la interfaz de usuario del juego.
+ * Se encarga de mostrar informacion y recibir entradas del usuario.
  */
-public class Vista implements VistaInterface{
+public class Vista implements VistaInterface {
     private final ControllerInterface controller;
     private final ModelInterface model;
     private final Scanner sc = new Scanner(System.in);
 
     /**
-     * Constructor de la clase Vista.
-     * @param controller El controlador con el que interactuara la vista.
+     * Construye la vista asociada al controlador dado.
+     *
+     * @param controller el controlador con el que interactuara la vista
      */
     public Vista(ControllerInterface controller) {
         this.controller = controller;
@@ -20,7 +20,7 @@ public class Vista implements VistaInterface{
     }
 
     /**
-     * Muestra el mensaje de bienvenida y las reglas del juego.
+     * Muestra el mensaje de bienvenida y las reglas basicas del juego.
      */
     public void mostrarBienvenida() {
         System.out.println("BIENVENIDO A FUNADO");
@@ -34,49 +34,45 @@ public class Vista implements VistaInterface{
     }
 
     /**
-     * Metodo llamado por el modelo para notificar cambios.
-     * Actualiza la informacion mostrada al usuario.
-     */
-    // @Override
-    // public void actualizar() {
-    //     System.out.println("-- Modelo actualizado --");
-    //     System.out.println("Jugador actual: " + model.obtenerSiguienteJugador().getNombre());
-    // }
-
-    // /**
-    //  * Muestra una pregunta o reto al usuario.
-    //  * @param tarjeta La tarjeta que contiene la pregunta o reto.
-    //  */ 
-    // public void mostrarPregunta(Tarjeta tarjeta) {
-    //     System.out.println("--- TARJETA ---");
-    //     System.out.println(tarjeta.getPregunta());
-    //     System.out.print("> Respuesta: ");
-    // }
-
-    /**
      * Muestra un mensaje general al usuario.
-     * @param mensaje El mensaje a mostrar.
+     *
+     * @param mensaje la cadena que se desea mostrar
      */
     public void mostrarMensaje(String mensaje) {
         System.out.println(mensaje);
     }
 
-    public String pedirNombre(int i){
+    /**
+     * Solicita el nombre del jugador numero i o la palabra "fin" para terminar.
+     *
+     * @param i el numero de orden del jugador
+     * @return el nombre ingresado o "fin"
+     */
+    public String pedirNombre(int i) {
         System.out.print("Ingrese el nombre del jugador " + i + " o escriba \"fin\" para terminar:");
-        String nombre = sc.nextLine();
-        return nombre;
+        return sc.nextLine();
     }
 
-    public String pedirNombre(){
+    /**
+     * Solicita el nombre del primer jugador.
+     *
+     * @return el nombre ingresado
+     */
+    public String pedirNombre() {
         System.out.print("Ingrese el nombre del jugador 1:");
-        String nombre = sc.nextLine();
-        return nombre;
+        return sc.nextLine();
     }
 
-    public String mostrarTurno(String turno){
+    /**
+     * Muestra el contenido del turno y pregunta si fue completado correctamente.
+     *
+     * @param turno el mensaje con la tarjeta a mostrar
+     * @return "Si" o "No" segun la respuesta valida del usuario
+     */
+    public String mostrarTurno(String turno) {
         System.out.println("\n" + turno);
         System.out.println("¿El jugador completo el turno satisfactoriamente? (Si/No)");
-        while (true) { 
+        while (true) {
             String respuesta = sc.nextLine();
             if (respuesta.equalsIgnoreCase("Si") || respuesta.equalsIgnoreCase("No")) {
                 return respuesta;
@@ -86,6 +82,11 @@ public class Vista implements VistaInterface{
         }
     }
 
+    /**
+     * Pregunta si el evento especial fue completado por los jugadores.
+     *
+     * @return "Si" o "No" segun la respuesta valida del usuario
+     */
     public String mostrarEvento() {
         System.out.println("Fue el evento completado por todos? (Si/No)");
         while (true) {
@@ -98,6 +99,11 @@ public class Vista implements VistaInterface{
         }
     }
 
+    /**
+     * Pregunta al anfitrion si desea continuar con el juego.
+     *
+     * @return "Si" o "No" segun la respuesta valida del usuario
+     */
     public String continuarJuego() {
         System.out.println("¿Desea continuar con el juego? (Si/No)");
         while (true) {

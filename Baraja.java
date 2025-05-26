@@ -2,18 +2,19 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Representa una baraja de tarjetas con preguntas para el juego.
+ * Representa una baraja de tarjetas con preguntas para el juego
  */
 public class Baraja {
     private final Tarjeta[] tarjetas;
     private int indexActual = 0;
 
     /**
-     * Constructor de la Baraja.
-     * Inicializa la baraja con una lista de preguntas y las clona en objetos Tarjeta.
-     * Luego, revuelve la baraja.
-     * @param preguntas Una lista de cadenas que representan las preguntas para las tarjetas.
-     * @throws IllegalArgumentException Si la lista de preguntas es nula o esta vacia.
+     * Construye una nueva baraja a partir de una lista de preguntas.
+     * Cada pregunta se copia en un objeto Tarjeta mediante el constructor de copia,
+     * y luego se revuelve el orden de las tarjetas.
+     *
+     * @param preguntas lista de cadenas que representan las preguntas para las tarjetas
+     * @throws IllegalArgumentException si la lista de preguntas es nula o esta vacia
      */
     public Baraja(List<String> preguntas) {
         if (preguntas == null || preguntas.isEmpty()) {
@@ -44,36 +45,43 @@ public class Baraja {
     }
 
     /**
-     * Obtiene la siguiente tarjeta de la baraja.
-     * Avanza el indice interno a la siguiente tarjeta.
-     * @return La siguiente tarjeta en la baraja, o null si no hay mas tarjetas.
+     * Obtiene la siguiente tarjeta de la baraja y avanza el indice interno.
+     * Si se han agotado las tarjetas, reinicia el indice y vuelve a revolver.
+     *
+     * @return la siguiente tarjeta en la baraja
      */
     public Tarjeta getSiguienteTarjeta() {
-        if (indexActual >= tarjetas.length){
-            indexActual = 0; // Reinicia el indice si se han agotado las tarjetas
+        if (indexActual >= tarjetas.length) {
+            indexActual = 0; // reinicia el indice si se han agotado las tarjetas
             revolverBaraja();
         }
         return tarjetas[indexActual++];
     }
 
-    public Tarjeta getTarjetaRandom(){
+    /**
+     * Obtiene una tarjeta al azar de la baraja sin modificar el orden ni el indice actual.
+     *
+     * @return una tarjeta seleccionada aleatoriamente
+     */
+    public Tarjeta getTarjetaRandom() {
         Random rnd = new Random();
         int randomIndex = rnd.nextInt(tarjetas.length);
-        Tarjeta tarjetaRandom = tarjetas[randomIndex];
-        return tarjetaRandom;
+        return tarjetas[randomIndex];
     }
 
     /**
      * Obtiene el numero total de tarjetas en la baraja.
-     * @return El tamano de la baraja.
+     *
+     * @return el tamano de la baraja
      */
     public int getSize() {
         return tarjetas.length;
     }
 
     /**
-     * Obtiene el indice de la tarjeta actual en la baraja.
-     * @return El indice actual de la tarjeta.
+     * Obtiene el indice de la siguiente tarjeta que se devolvera.
+     *
+     * @return el indice actual en la baraja
      */
     public int getIndex() {
         return indexActual;
