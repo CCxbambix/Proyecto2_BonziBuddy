@@ -23,7 +23,12 @@ public class Castigado implements EstadoJugador {
      */
     @Override
     public String turnoSiguiente(String opcion) {
-        return null;
+        Tarjeta reto = jugador.getModel().getTarjetaRetos();
+        Tarjeta pregunta = jugador.getModel().getTarjetaPreguntas();
+        String mensaje = "Turno de " + jugador.getNombre() + " :\n" +
+                         "Debes responder la pregunta: " + pregunta.getPregunta() + "\n" +
+                         "Y completar el reto: " + reto.getPregunta();
+        return mensaje;
     }
 
     /**
@@ -46,6 +51,6 @@ public class Castigado implements EstadoJugador {
 
     @Override
     public void turnoFallido() {
-        turnosCastigado == 0
+        turnosCastigado = 0;
     }
 }

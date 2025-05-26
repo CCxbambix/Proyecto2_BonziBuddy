@@ -98,9 +98,21 @@ public class Controller implements ControllerInterface {
         }
     }
 
+    public void lanzarEvento(){
+
+    }
+
     private void juego(){
-        while (true) { 
-            Jugador jugador = model.obtenerSiguienteJugador();
-        }
+        Boolean opcion = true;
+        int rondas = 0;
+        while (true){
+            if (opcion) ronda("pregunta");
+            else ronda("reto");
+            opcion = !opcion; // Alterna entre pregunta y desafio
+            if (rondas >= 2){
+                rondas = 0;
+                lanzarEvento();
+            }
+        }   
     }
 }

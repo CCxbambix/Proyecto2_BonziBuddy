@@ -130,8 +130,7 @@ public class Model implements ModelInterface, Sujeto {
      */
     @Override
     public Tarjeta getTarjetaRetos() {
-        Tarjeta t = retos.getSiguienteTarjeta();
-        notificarRegulares();
+        Tarjeta t = retos.getTarjetaRandom();
         return t;
     }
 
@@ -142,8 +141,7 @@ public class Model implements ModelInterface, Sujeto {
      */
     @Override
     public Tarjeta getTarjetaEventos() {
-        Tarjeta t = eventos.getSiguienteTarjeta();
-        notificarTodos();
+        Tarjeta t = eventos.getTarjetaRandom();
         return t;
     }
 
@@ -154,8 +152,7 @@ public class Model implements ModelInterface, Sujeto {
      */
     @Override
     public Tarjeta getTarjetaPreguntas() {
-        Tarjeta t = preguntas.getSiguienteTarjeta();
-        notificarRegulares();
+        Tarjeta t = preguntas.getTarjetaRandom();
         return t;
     }
 

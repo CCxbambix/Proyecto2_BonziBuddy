@@ -55,6 +55,13 @@ public class Baraja {
         return tarjetas[indexActual++];
     }
 
+    public Tarjeta getTarjetaRandom(){
+        Random rnd = new Random();
+        int randomIndex = rnd.nextInt(tarjetas.length);
+        Tarjeta tarjetaRandom = tarjetas[randomIndex];
+        return tarjetaRandom;
+    }
+
     /**
      * Obtiene el numero total de tarjetas en la baraja.
      * @return El tamano de la baraja.

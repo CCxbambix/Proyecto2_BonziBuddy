@@ -11,4 +11,8 @@ public interface EstadoJugador {
      * @return El valor de enum Estado que representa este estado.
      */
     public Estado getEstado();
+
+    public void turnoLogrado();
+
+    public void turnoFallido();
 }

@@ -14,7 +14,7 @@ public class Jugador implements Observador {
      */
     private int puntos;    
     private ModelInterface model;
-+
+
     /**
      * Constructor de la clase Jugador.
      * Inicializa al jugador con su nombre, el modelo asociado y sus estados iniciales.

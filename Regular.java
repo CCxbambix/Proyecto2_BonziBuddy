@@ -23,7 +23,11 @@ public class Regular implements EstadoJugador {
      */
     @Override
     public String turnoSiguiente(String opcion) {
-       return null;
+        Tarjeta tarjeta;
+        if (opcion.equalsIgnoreCase("pregunta")) tarjeta = jugador.getModel().getTarjetaPreguntas();
+        else tarjeta = jugador.getModel().getTarjetaRetos();
+        String mensaje =  "Turno de " + jugador.getNombre() + ":\n" + tarjeta.getPregunta();
+        return mensaje;
     }
 
     /**
@@ -40,6 +44,6 @@ public class Regular implements EstadoJugador {
     }
 
     public void turnoFallido() {
-
+        jugador.setEstadoActual(jugador.getEstadoCastigado());
     }
 }
