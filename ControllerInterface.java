@@ -8,7 +8,7 @@ public interface ControllerInterface {
      *
      * @param j El jugador que reforzara su estado.
      */
-    void reforzarEstado(Jugador j);
+    public void reforzarEstado(Jugador j);
 
     /**
      * Arranca la partida: carga barajas y notifica a los observadores.
