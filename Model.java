@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 /**
@@ -18,6 +19,12 @@ public class Model implements ModelInterface, Sujeto {
     private Baraja preguntas;
 
     private final Queue<Jugador> colaJugadores = new LinkedList<>();
+
+    ControllerInterface controller;
+
+    private String eventoActual;
+
+
     // ——— Sujeto —————————————————————————————————————————————
 
     /**
@@ -30,6 +37,36 @@ public class Model implements ModelInterface, Sujeto {
         if (!todos.contains(jugador)) {
             todos.add(jugador);
             regulares.add(jugador);
+        }
+    }
+
+    public ControllerInterface getController() {
+        return controller;
+    }
+
+    public String getEventoActual() {
+        return eventoActual;
+    }
+
+    public void setEventoActual(){
+        this.eventoActual = eventos.getSiguienteTarjeta().getPregunta();
+    }
+
+    public void incrementarPuntosCastigado(){
+        for (Jugador j : castigados) {
+            j.incrementarPuntos();
+        }
+    }
+
+    public void incrementarPuntosRegular(){
+        for (Jugador j : regulares) {
+            j.incrementarPuntos();
+        }
+    }
+
+    public void incrementarPuntosTodos(){
+        for (Jugador j : todos) {
+            j.incrementarPuntos();
         }
     }
 
@@ -114,7 +151,8 @@ public class Model implements ModelInterface, Sujeto {
      * Notifica a todos los jugadores que la partida ha iniciado.
      */
     @Override
-    public void iniciarPartida() {
+    public void iniciarPartida(ControllerInterface controller) {
+        this.controller = controller;
         retos = new Baraja(LectorPreguntas.getRetos());
         eventos = new Baraja(LectorPreguntas.getEventos());
         preguntas = new Baraja(LectorPreguntas.getPreguntas());

@@ -85,4 +85,28 @@ public class Vista implements VistaInterface{
             }
         }
     }
+
+    public String mostrarEvento() {
+        System.out.println("Fue el evento completado por todos? (Si/No)");
+        while (true) {
+            String respuesta = sc.nextLine();
+            if (respuesta.equalsIgnoreCase("Si") || respuesta.equalsIgnoreCase("No")) {
+                return respuesta;
+            } else {
+                System.out.println("Respuesta invalida. Por favor, ingrese 'Si' o 'No'.");
+            }
+        }
+    }
+
+    public String continuarJuego() {
+        System.out.println("¿Desea continuar con el juego? (Si/No)");
+        while (true) {
+            String respuesta = sc.nextLine();
+            if (respuesta.equalsIgnoreCase("Si") || respuesta.equalsIgnoreCase("No")) {
+                return respuesta;
+            } else {
+                System.out.println("Respuesta invalida. Por favor, ingrese 'Si' o 'No'.");
+            }
+        }
+    }
 }

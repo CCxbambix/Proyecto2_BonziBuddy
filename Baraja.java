@@ -49,8 +49,9 @@ public class Baraja {
      * @return La siguiente tarjeta en la baraja, o null si no hay mas tarjetas.
      */
     public Tarjeta getSiguienteTarjeta() {
-        if (indexActual >= tarjetas.length) {
-            return null;
+        if (indexActual >= tarjetas.length){
+            indexActual = 0; // Reinicia el indice si se han agotado las tarjetas
+            revolverBaraja();
         }
         return tarjetas[indexActual++];
     }

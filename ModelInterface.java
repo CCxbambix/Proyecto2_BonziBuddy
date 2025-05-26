@@ -6,7 +6,7 @@ public interface ModelInterface extends Sujeto {
     /**
      * Inicializa la partida cargando los recursos necesarios (barajas, etc.).
      */
-    public void iniciarPartida();
+    public void iniciarPartida(ControllerInterface controller);
     /**
      * Obtiene la siguiente tarjeta de la baraja de retos.
      * @return La siguiente Tarjeta de retos.
@@ -32,4 +32,16 @@ public interface ModelInterface extends Sujeto {
      * @return El numero total de jugadores.
      */
     public int getTotalJugadores();
+
+    public ControllerInterface getController();
+
+    public String getEventoActual();
+
+    public void setEventoActual();
+
+    public void incrementarPuntosCastigado();
+
+    public void incrementarPuntosRegular();
+
+    public void incrementarPuntosTodos();
 }

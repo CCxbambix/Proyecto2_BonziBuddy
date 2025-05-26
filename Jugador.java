@@ -1,3 +1,6 @@
+
+import jdk.dynalink.linker.GuardingTypeConverterFactory;
+
 /**
  * Representa a un jugador en el juego.
  * Implementa la interfaz Observador para ser notificado por el modelo.
@@ -14,7 +17,6 @@ public class Jugador implements Observador {
      */
     private int puntos;    
     private ModelInterface model;
-
     /**
      * Constructor de la clase Jugador.
      * Inicializa al jugador con su nombre, el modelo asociado y sus estados iniciales.
@@ -103,8 +105,8 @@ public class Jugador implements Observador {
      */
     @Override
     public void actualizar() {
-        // logica de vista al recibir notificacion del modelo
-        System.out.println("[" + nombre + "] modelo actualizado: estado=" + getEstado());
+        Controller controller = (Controller)model.getController();
+        controller.getVista().mostrarMensaje("Jugador " + nombre + " " + model.getEventoActual());
     }
 
     /**
