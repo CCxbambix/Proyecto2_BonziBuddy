@@ -62,5 +62,6 @@ public class Regular implements EstadoJugador {
     @Override
     public void turnoFallido() {
         jugador.setEstadoActual(jugador.getEstadoCastigado());
+        jugador.getModel().registrarCastigado(jugador);
     }
 }

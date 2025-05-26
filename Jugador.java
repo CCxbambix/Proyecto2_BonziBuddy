@@ -11,6 +11,8 @@ public class Jugador implements Observador {
     private int puntos;
     private ModelInterface model;
 
+    private Estado estadoIdentificador;
+
     /**
      * Construye un jugador con nombre y modelo asociados.
      * Inicializa los estados regular y castigado, y fija el estado inicial a regular.
@@ -24,6 +26,7 @@ public class Jugador implements Observador {
         this.estadoRegular = new Regular(this);
         this.estadoCastigado = new Castigado(this);
         this.estadoActual = estadoRegular;
+        this.estadoIdentificador = Estado.REGULAR; // Estado inicial
         this.puntos = 0;
     }
 
@@ -70,6 +73,7 @@ public class Jugador implements Observador {
      */
     public void setEstadoActual(EstadoJugador nuevo) {
         this.estadoActual = nuevo;
+        this.estadoIdentificador = nuevo.getEstado();
     }
 
     /**

@@ -53,6 +53,7 @@ public class Castigado implements EstadoJugador {
         turnosCastigado++;
         if (turnosCastigado >= 2) {
             jugador.setEstadoActual(jugador.getEstadoRegular());
+            jugador.getModel().registrarRegular(jugador);
         }
     }
 
